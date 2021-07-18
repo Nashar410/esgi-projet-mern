@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "6889e684-31d9-4d62-9ef5-d3d18d53e75f",
+		"name": "Projet mern esgi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "all Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_URL}}/users",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new Users",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"toto\",\n    \"lastName\": \"lemoine\",\n    \"email\": \"totgmail.com\",\n    \"username\": \"tdsdssdoto63\",\n    \"kbis\": \"32672677\",\n    \"role\": \"ADMIN\",\n    \"devise\": null,\n    \"contact\": null,\n    \"company\": null,\n    \"confirmed\": false,\n    \"password\": \"ddddssd\",\n    \"createdAt\": \"2017-08-15T14:05:15.723Z\",\n    \"updatedAt\": \"2017-08-15T14:05:15.723Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_URL}}/users",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Users",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{API_URL}}/users/1",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
