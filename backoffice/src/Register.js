@@ -34,6 +34,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Register() {
     const classes = useStyles();
+
+    const handleSubmit = (event) => {
+        console.log(event)
+        alert('Le formulaire a été soumis');
+        event.preventDefault()
+    }
+
     return (
         <Card>
             <Title title="Créer son compte marchand"/>
@@ -48,7 +55,7 @@ export default function Register() {
                             <Typography component="h1" variant="h5">
                                 Créer mon compte marchand
                             </Typography>
-                            <form className={classes.form} noValidate>
+                            <form className={classes.form} onSubmit={(event) => handleSubmit(event)} noValidate>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
