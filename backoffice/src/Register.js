@@ -1,13 +1,10 @@
 import * as React from "react";
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import {Title} from 'react-admin';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LocalMall from '@material-ui/icons/LocalMall';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -42,82 +39,97 @@ export default function Register() {
     }
 
     return (
-        <Card>
-            <Title title="Créer son compte marchand"/>
-            <CardContent>
-                <React.Fragment>
-                    <Container component="main" maxWidth="xs">
-                        <CssBaseline/>
-                        <div className={classes.paper}>
-                            <Avatar className={classes.avatar}>
-                                <LockOutlinedIcon/>
-                            </Avatar>
-                            <Typography component="h1" variant="h5">
-                                Créer mon compte marchand
-                            </Typography>
-                            <form className={classes.form} onSubmit={(event) => handleSubmit(event)} noValidate>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12} sm={6}>
-                                        <TextField
-                                            autoComplete="fname"
-                                            name="firstName"
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                            id="firstName"
-                                            label="Prénom"
-                                            autoFocus
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                        <TextField
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                            id="lastName"
-                                            label="Nom"
-                                            name="lastName"
-                                            autoComplete="lname"
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                            id="email"
-                                            label="Adresse e-mail"
-                                            name="email"
-                                            autoComplete="email"
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                            name="password"
-                                            label="Mot de passe"
-                                            type="password"
-                                            id="password"
-                                            autoComplete="current-password"
-                                        />
-                                    </Grid>
-                                </Grid>
-                                <Button
-                                    type="submit"
+        <React.Fragment>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline/>
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LocalMall/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Créer mon compte marchand
+                    </Typography>
+                    <form className={classes.form} onSubmit={(event) => handleSubmit(event)} noValidate>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    autoComplete="fname"
+                                    name="firstName"
+                                    variant="outlined"
+                                    required
                                     fullWidth
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.submit}
-                                >
-                                    Créer mon compte
-                                </Button>
-                            </form>
-                        </div>
-                    </Container>
-                </React.Fragment>
-            </CardContent>
-        </Card>
+                                    id="firstName"
+                                    label="Prénom"
+                                    autoFocus
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="lastName"
+                                    label="Nom"
+                                    name="lastName"
+                                    autoComplete="lname"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="company"
+                                    label="Nom de la société"
+                                    name="company"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="kbis"
+                                    label="KBIS de la société"
+                                    name="kbis"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Adresse e-mail"
+                                    name="email"
+                                    autoComplete="email"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Mot de passe"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                />
+                            </Grid>
+                        </Grid>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Créer mon compte
+                        </Button>
+                    </form>
+                </div>
+            </Container>
+        </React.Fragment>
     )
 }
