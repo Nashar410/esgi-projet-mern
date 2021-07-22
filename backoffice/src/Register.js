@@ -30,12 +30,91 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Register() {
+
+
+    // 
+    const [fname, setFname] = React.useState('');
+    const [lname, setLname] = React.useState('');
+    const [company, setCompany] = React.useState('');
+    const [kbis, setKbis] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    
     const classes = useStyles();
 
+    const handleChange = event => {
+
+        let nameAttribut = event.target.name
+        let valueInput = event.target.value
+        
+        if(nameAttribut == 'firstName') {
+            setFname(valueInput)
+        }
+        else if(nameAttribut == 'lastName') {
+            setLname(valueInput)
+        }
+        else if(nameAttribut == 'company') {
+            setCompany(valueInput)
+        }
+        else if(nameAttribut == 'kbis') {
+            setKbis(valueInput)
+        }
+        else if(nameAttribut == 'email') {
+            setEmail(valueInput)
+        }
+        else if(nameAttribut == 'password') {
+            setPassword(valueInput)
+        }
+
+    }
+
     const handleSubmit = (event) => {
-        console.log(event)
+
+        if(fname != '', lname != '', company != '', kbis != '', email != '', password != ''){
+
+            console.log(JSON.stringify({
+                firstName: fname,
+                lastName: lname,
+                username: fname,
+                kbis: kbis,
+                role: 'ADMIN',
+                devise: null,
+                contact: null,
+                company: company,
+                confirmed: false,
+                password: password,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            }))
+
+            fetch("http://localhost:3000/api/users/", {
+                method: 'POST',
+                headers: {
+                    // 'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    firstName: fname,
+                    lastName: lname,
+                    username: fname,
+                    kbis: kbis,
+                    email: email,
+                    role: 'ADMIN',
+                    devise: null,
+                    contact: null,
+                    company: company,
+                    confirmed: false,
+                    password: password,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                })
+            })
+            .then((response) => response.json())
+            .then((responseData) => {
+                console.log(responseData)
+            })
+        }
         alert('Le formulaire a été soumis');
-        event.preventDefault()
     }
 
     return (
@@ -53,6 +132,7 @@ export default function Register() {
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    onChange={(event) => handleChange(event)}
                                     autoComplete="fname"
                                     name="firstName"
                                     variant="outlined"
@@ -65,6 +145,7 @@ export default function Register() {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    onChange={(event) => handleChange(event)}
                                     variant="outlined"
                                     required
                                     fullWidth
@@ -76,6 +157,7 @@ export default function Register() {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    onChange={(event) => handleChange(event)}
                                     variant="outlined"
                                     required
                                     fullWidth
@@ -86,6 +168,7 @@ export default function Register() {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    onChange={(event) => handleChange(event)}
                                     variant="outlined"
                                     required
                                     fullWidth
@@ -96,6 +179,7 @@ export default function Register() {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    onChange={(event) => handleChange(event)}
                                     variant="outlined"
                                     required
                                     fullWidth
@@ -107,6 +191,7 @@ export default function Register() {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    onChange={(event) => handleChange(event)}
                                     variant="outlined"
                                     required
                                     fullWidth
