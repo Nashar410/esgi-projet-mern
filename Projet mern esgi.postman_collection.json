@@ -23,32 +23,6 @@
 			"response": []
 		},
 		{
-			"name": "new Users",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"firstName\": \"toto\",\n    \"lastName\": \"lemoine\",\n    \"email\": \"totgmail.com\",\n    \"username\": \"tdsdssdoto63\",\n    \"kbis\": \"32672677\",\n    \"role\": \"ADMIN\",\n    \"devise\": null,\n    \"contact\": null,\n    \"company\": null,\n    \"confirmed\": false,\n    \"password\": \"ddddssd\",\n    \"createdAt\": \"2017-08-15T14:05:15.723Z\",\n    \"updatedAt\": \"2017-08-15T14:05:15.723Z\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{API_URL}}/users",
-					"host": [
-						"{{API_URL}}"
-					],
-					"path": [
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Delete Users",
 			"request": {
 				"method": "DELETE",
@@ -61,6 +35,60 @@
 					"path": [
 						"users",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Thomas\",\n    \"lastName\": \"Lemoine\",\n    \"email\": \"contact@thomaslemoine.net\",\n    \"username\": \"tlemoine\",\n    \"kbis\": \"32672677\",\n    \"devise\": null,\n    \"contact\": null,\n    \"company\": null,\n    \"confirmed\": false,\n    \"password\": \"12345678\",\n    \"roles\": [\"merchant\", \"user\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_URL}}/auth/signup",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"tlemoine\",\n    \"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_URL}}/auth/signin",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"auth",
+						"signin"
 					]
 				}
 			},
