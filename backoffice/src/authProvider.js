@@ -16,8 +16,11 @@ export default {
             })
             .then((res) => {
                 const decodedToken = decodeJwt(res.accessToken);
-                localStorage.setItem('token', res.accessToken);
-                localStorage.setItem('permissions', res.roles);
+                const {id, confirmed, roles, accessToken} = res;
+                localStorage.setItem('confirmed', confirmed);
+                localStorage.setItem('token', accessToken);
+                localStorage.setItem('permissions', roles);
+                localStorage.setItem('userId', id);
             });
     },
     logout: () => {
@@ -35,5 +38,10 @@ export default {
     getPermissions: () => {
         const role = localStorage.getItem('permissions');
         return role ? Promise.resolve(role) : Promise.reject();
+    },
+    getIdentity : () => {
+        const confirmed = localStorage.getItem("confirmed");
+        return Promise.resolve(confirmed);
     }
+
 };
