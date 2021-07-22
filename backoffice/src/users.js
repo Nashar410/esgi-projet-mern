@@ -1,5 +1,5 @@
 import * as React from "react";
-import { List, Datagrid, TextField, EmailField } from 'react-admin';
+import { List, Datagrid, TextField, EmailField, EditButton, TextInput, BooleanInput, Edit, SimpleForm, DateInput } from 'react-admin';
 
 export const UserList = props => (
     <List {...props}>
@@ -10,6 +10,25 @@ export const UserList = props => (
             <TextField source="username" />
             <EmailField source="email" />
             <TextField source="company" />
+            <EditButton />
         </Datagrid>
     </List>
+);
+
+export const UserEdit = props => (
+    <Edit {...props}>
+        <SimpleForm>
+            <TextInput source="firstName" />
+            <TextInput source="lastName" />
+            <TextInput source="email" />
+            <TextInput source="username" />
+            <DateInput source="kbis" />
+            <TextInput source="role" />
+            <TextInput source="devise" />
+            <TextInput source="contact" />
+            <TextInput source="company" />
+            <BooleanInput source="confirmed" />
+            <TextInput source="password" />
+        </SimpleForm>
+    </Edit>
 );
