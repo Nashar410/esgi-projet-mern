@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-
 const app = express();
+const db = require("./models");
+const Role = db.role;
 
 app.use(cors());
 
@@ -11,13 +12,27 @@ app.use(express.json());  /* bodyParser.json() is deprecated */
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({extended: true}));   /* bodyParser.urlencoded() is deprecated */
 
-const db = require("./models");
+db.sequelize.sync({force: true}).then(() => {
+    console.log('Drop and Resync Db');
+    initial();
+});
 
-db.sequelize.sync();
-// // drop the table if it already exists
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and re-sync db.");
-// });
+function initial() {
+    Role.create({
+        id: 1,
+        name: "user"
+    });
+
+    Role.create({
+        id: 2,
+        name: "merchant"
+    });
+
+    Role.create({
+        id: 3,
+        name: "admin"
+    });
+}
 
 // simple route
 app.get("/", (req, res) => {
@@ -25,6 +40,7 @@ app.get("/", (req, res) => {
 });
 
 require("./routes/user")(app);
+require("./routes/auth")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
