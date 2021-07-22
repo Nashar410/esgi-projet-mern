@@ -28,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         kbis: DataTypes.STRING,
-        role: DataTypes.STRING,
         devise: DataTypes.STRING,
         contact: DataTypes.STRING,
         company: DataTypes.STRING,

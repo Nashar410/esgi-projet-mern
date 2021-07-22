@@ -5,20 +5,23 @@
     "database": "app",
     "host": "postgres",
     "port": "5432",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "secret": "esgi-mern-secret-key"
   },
   "test": {
     "username": "root",
     "password": "password",
     "database": "app",
     "host": "0.0.0.0",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "secret": "esgi-mern-secret-key"
   },
   "production": {
     "username": "root",
     "password": "password",
     "database": "app",
     "host": "0.0.0.0",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "secret": "esgi-mern-secret-key"
   }
 }

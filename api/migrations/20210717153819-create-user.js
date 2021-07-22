@@ -28,9 +28,6 @@ module.exports = {
       kbis: {
         type: Sequelize.STRING
       },
-      role: {
-        type: Sequelize.STRING
-      },
       devise: {
         type: Sequelize.STRING
       },
