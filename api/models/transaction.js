@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     Transaction.init({
         type: DataTypes.STRING,
         total: DataTypes.DOUBLE,
+        cart: DataTypes.JSON,
         currency: {
             type: DataTypes.STRING,
             unique: true,

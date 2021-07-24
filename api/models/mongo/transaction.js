@@ -7,7 +7,8 @@ const TransactionSchema = new Schema({
     currency: String,
     quantity: Number,
     merchant: Array,
-    client: Array
+    client: Array,
+    cart: Schema.Types.Mixed
 });
 const Transaction = connection.model("Transaction", TransactionSchema);
 
