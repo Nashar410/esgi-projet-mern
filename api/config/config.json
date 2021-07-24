@@ -5,6 +5,7 @@
     "database": "app",
     "host": "postgres",
     "port": "5432",
+    "mongoURL": "mongodb://root:password@mongo:27017/app",
     "dialect": "postgres",
     "secret": "esgi-mern-secret-key"
   },
