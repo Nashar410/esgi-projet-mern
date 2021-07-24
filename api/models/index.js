@@ -41,7 +41,7 @@ db.ROLES = ["user", "admin", "merchant"];
 
 
 
-const denormalizeUser = (transaction) => {
+const denormalizeTransaction = (transaction) => {
     db.transaction.findByPk(transaction.id, {
         include: [{ model: db.users, as: "merchant" }],
         //include: [{ model: Client, as: "client" }],
