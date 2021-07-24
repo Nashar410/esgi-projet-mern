@@ -9,7 +9,7 @@ import authProvider from "./authProvider";
 const dataProvider = jsonServerProvider("http://0.0.0.0:3000/api");
 const App = () => (
     <Admin customRoutes={customRoutes} authProvider={authProvider} dataProvider={dataProvider}>
-        <Resource name="users" list={UserList}/>
+        <Resource name="users" list={UserList} edit={UserEdit}/>
     </Admin>
 );
 

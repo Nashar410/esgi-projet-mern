@@ -5,9 +5,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import LocalMall from '@material-ui/icons/LocalMall';
+import DoneIcon from '@material-ui/icons/Done';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { element } from "prop-types";
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -16,9 +19,21 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
+    paperDone: {
+        marginTop: theme.spacing(4),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    para: {
+        textAlign: 'center'
+    },
     avatar: {
         margin: theme.spacing(1),
         backgroundColor: theme.palette.secondary.main,
+    },
+    done: {
+        backgroundColor: theme.palette.success.main, 
     },
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -35,10 +50,18 @@ export default function Register() {
     // 
     const [fname, setFname] = React.useState('');
     const [lname, setLname] = React.useState('');
+    const [username, setUsername] = React.useState('');
     const [company, setCompany] = React.useState('');
     const [kbis, setKbis] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [errorUsername, setErrorUsername] = React.useState('');
+    const [errorEmail, setErrorEmail] = React.useState('');
+    const [sendForm, setSendForm] = React.useState(false);
+    let elementTextFieldUsername;
+    let elementTextFieldEmail;
+    let elementConfirmSend;
+    let errorMessage;
     
     const classes = useStyles();
 
@@ -49,9 +72,14 @@ export default function Register() {
         
         if(nameAttribut == 'firstName') {
             setFname(valueInput)
+            event.target.setAttribute('error', '')
         }
         else if(nameAttribut == 'lastName') {
             setLname(valueInput)
+        }
+        else if(nameAttribut == 'username') {
+            setUsername(valueInput)
+            setErrorUsername('')
         }
         else if(nameAttribut == 'company') {
             setCompany(valueInput)
@@ -61,6 +89,7 @@ export default function Register() {
         }
         else if(nameAttribut == 'email') {
             setEmail(valueInput)
+            setErrorEmail('')
         }
         else if(nameAttribut == 'password') {
             setPassword(valueInput)
@@ -70,14 +99,60 @@ export default function Register() {
 
     const handleSubmit = (event) => {
 
-        if(fname != '', lname != '', company != '', kbis != '', email != '', password != ''){
+        let isValid = 0;
 
-            console.log(JSON.stringify({
+        if(fname != ''){
+            isValid += 1;
+        }
+
+        if(lname != ''){
+            isValid += 1;
+        }
+
+        if(username != ''){
+            isValid += 1;
+        }
+
+        if(company != ''){
+            isValid += 1;
+        }
+
+        if(kbis != ''){
+            isValid += 1;
+        }
+
+        if(email != ''){
+            isValid += 1;
+        }
+
+        if(password != ''){
+            isValid += 1;
+        }
+
+        if(isValid === 7){
+            return createUser(event);
+        }else {
+            console.log('Veuillez saisir tous les champs')
+        }
+
+        event.preventDefault();
+    }
+
+    const createUser = (event) => {
+
+        fetch("http://localhost:3000/api/auth/signup/", {
+            method: 'POST',
+            headers: {
+                // 'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
                 firstName: fname,
                 lastName: lname,
-                username: fname,
+                username: username,
                 kbis: kbis,
-                role: 'ADMIN',
+                email: email,
+                role: ['merchant', 'user'],
                 devise: null,
                 contact: null,
                 company: company,
@@ -85,36 +160,105 @@ export default function Register() {
                 password: password,
                 createdAt: new Date(),
                 updatedAt: new Date(),
-            }))
+            })
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+            if(responseData.message == 'User was registered successfully!'){
+                setSendForm(true)
+                setTimeout(function(){ 
+                    window.location.replace(window.location.origin + '/#/login')
+                }, 5000);
+            }else{
+                errorMessage = responseData.message;
+                if(errorMessage == 'Failed! Username is already in use!'){
+                    setErrorUsername('Le Username est déjà utilisé')
+                }else {
+                    setErrorUsername('')
+                }
+                
+                if(errorMessage == 'Failed! Email is already in use!'){
+                    setErrorEmail('L\'email saisi est déjà utilisé')
+                }else {
+                    setErrorEmail('')
+                }
+            }
+        })
 
-            fetch("http://localhost:3000/api/users/", {
-                method: 'POST',
-                headers: {
-                    // 'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    firstName: fname,
-                    lastName: lname,
-                    username: fname,
-                    kbis: kbis,
-                    email: email,
-                    role: 'ADMIN',
-                    devise: null,
-                    contact: null,
-                    company: company,
-                    confirmed: false,
-                    password: password,
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                })
-            })
-            .then((response) => response.json())
-            .then((responseData) => {
-                console.log(responseData)
-            })
-        }
-        alert('Le formulaire a été soumis');
+        event.preventDefault();
+    }
+
+    if(errorUsername != ''){
+        elementTextFieldUsername = <TextField
+            error
+            onChange={(event) => handleChange(event)}
+            variant="outlined"
+            required
+            fullWidth
+            helperText={errorUsername}
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            required
+        />
+    }else{
+        elementTextFieldUsername = <TextField
+            onChange={(event) => handleChange(event)}
+            variant="outlined"
+            required
+            fullWidth
+            helperText={errorUsername}
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            required
+        />
+    }
+
+    if(errorEmail != ''){
+        elementTextFieldEmail = <TextField
+            error
+            onChange={(event) => handleChange(event)}
+            variant="outlined"
+            required
+            fullWidth
+            id="email"
+            helperText={errorEmail}
+            label="Adresse e-mail"
+            name="email"
+            autoComplete="email"
+            required
+        />
+    }else{
+        elementTextFieldEmail = <TextField
+            onChange={(event) => handleChange(event)}
+            variant="outlined"
+            required
+            fullWidth
+            id="email"
+            helperText={errorEmail}
+            label="Adresse e-mail"
+            name="email"
+            autoComplete="email"
+            required
+        />
+    }
+
+    if(sendForm){
+        elementConfirmSend = <div className={classes.paperDone}>
+            <Avatar className={classes.done}>
+                <DoneIcon/>
+            </Avatar>
+            <p className={classes.para}>
+                Votre inscription a bien été prise en compte, félicitations ! 
+                
+                Vous allez être redirigé sur la page de connexion dans quelques secondes.
+            </p>
+        </div>
+    }else{
+        elementConfirmSend;
     }
 
     return (
@@ -128,7 +272,7 @@ export default function Register() {
                     <Typography component="h1" variant="h5">
                         Créer mon compte marchand
                     </Typography>
-                    <form className={classes.form} onSubmit={(event) => handleSubmit(event)} noValidate>
+                    <form className={classes.form} onSubmit={(event) => handleSubmit(event)}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -141,6 +285,7 @@ export default function Register() {
                                     id="firstName"
                                     label="Prénom"
                                     autoFocus
+                                    required
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -153,7 +298,11 @@ export default function Register() {
                                     label="Nom"
                                     name="lastName"
                                     autoComplete="lname"
+                                    required
                                 />
+                            </Grid>
+                            <Grid item xs={12}>
+                                {elementTextFieldUsername}
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -164,6 +313,7 @@ export default function Register() {
                                     id="company"
                                     label="Nom de la société"
                                     name="company"
+                                    required
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -175,19 +325,11 @@ export default function Register() {
                                     id="kbis"
                                     label="KBIS de la société"
                                     name="kbis"
+                                    required
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField
-                                    onChange={(event) => handleChange(event)}
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Adresse e-mail"
-                                    name="email"
-                                    autoComplete="email"
-                                />
+                                {elementTextFieldEmail}
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -200,6 +342,7 @@ export default function Register() {
                                     type="password"
                                     id="password"
                                     autoComplete="current-password"
+                                    required
                                 />
                             </Grid>
                         </Grid>
@@ -213,6 +356,7 @@ export default function Register() {
                             Créer mon compte
                         </Button>
                     </form>
+                    {elementConfirmSend}
                 </div>
             </Container>
         </React.Fragment>
