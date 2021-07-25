@@ -152,7 +152,6 @@ export default function Register() {
                 username: username,
                 kbis: kbis,
                 email: email,
-                role: ['merchant', 'user'],
                 devise: null,
                 contact: null,
                 company: company,
