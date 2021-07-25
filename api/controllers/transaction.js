@@ -33,3 +33,19 @@ exports.create = (req, res) => {
             });
         });
 };
+
+exports.findAll = (req, res) => {
+
+    TransactionDB.findAll()
+        .then(data => {
+            res.set('Access-Control-Expose-Headers', 'X-Total-Count')
+            res.set('X-Total-Count', data.length)
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving Users."
+            });
+        });
+}

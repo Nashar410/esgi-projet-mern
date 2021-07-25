@@ -19,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         cart: DataTypes.JSON,
         currency: {
             type: DataTypes.STRING,
-            unique: true,
             allowNull: false,
         },
         quantity: DataTypes.INTEGER,
+        modality: DataTypes.STRING // achat || remboursement || etc
     }, {
         sequelize,
         modelName: 'Transaction',

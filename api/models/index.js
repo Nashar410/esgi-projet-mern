@@ -32,9 +32,22 @@ db.users.belongsToMany(db.role, {
     otherKey: "roleId"
 });
 
-db.users.hasMany(db.transaction);
+db.users.hasMany(db.transaction, {
+    foreignKey: "userId"
+});
+
 db.transaction.belongsTo(db.users, {
-    as: "user"
+    as: "user",
+    foreignKey: "userId"
+});
+
+db.users.hasOne(db.credential,{
+    foreignKey: "userId"
+});
+
+db.credential.belongsTo(db.users, {
+    as: "Credential",
+    foreignKey: 'userId'
 });
 
 db.ROLES = ["user", "admin", "merchant"];
