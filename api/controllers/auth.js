@@ -70,7 +70,7 @@ exports.signin = (req, res) => {
 
             // Generate credentials if not exist
             let userCred = await user.getCredential();
-            if (!userCred || !userCred.token) {
+            if (!userCred || !userCred.clientToken) {
                 userCred = await generateCredentials(user);
             }
 

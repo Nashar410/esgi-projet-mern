@@ -19,6 +19,7 @@ exports.create = (req, res) => {
         cart: req.body.cart,
         currency: req.body.currency,
         quantity: req.body.quantity,
+        userId: req.userId
     };
 
     // Save Transactions in the database
