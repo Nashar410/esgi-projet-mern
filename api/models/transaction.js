@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         quantity: DataTypes.INTEGER,
-        modality: DataTypes.STRING // achat || remboursement || etc
     }, {
         sequelize,
         modelName: 'Transaction',

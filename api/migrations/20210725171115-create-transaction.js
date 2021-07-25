@@ -21,7 +21,6 @@ module.exports = {
       total: { type: Sequelize.DOUBLE},
       cart: { type: Sequelize.JSON},
       quantity: { type: Sequelize.INTEGER},
-      modality: { type: Sequelize.STRING},
       currency: {
         type: Sequelize.STRING,
         allowNull: false,
