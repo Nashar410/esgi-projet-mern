@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.main,
     },
     done: {
-        backgroundColor: theme.palette.success.main, 
+        backgroundColor: theme.palette.success.main,
     },
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Register() {
 
 
-    // 
+    //
     const [fname, setFname] = React.useState('');
     const [lname, setLname] = React.useState('');
     const [username, setUsername] = React.useState('');
@@ -62,14 +62,14 @@ export default function Register() {
     let elementTextFieldEmail;
     let elementConfirmSend;
     let errorMessage;
-    
+
     const classes = useStyles();
 
     const handleChange = event => {
 
         let nameAttribut = event.target.name
         let valueInput = event.target.value
-        
+
         if(nameAttribut == 'firstName') {
             setFname(valueInput)
             event.target.setAttribute('error', '')
@@ -152,7 +152,7 @@ export default function Register() {
                 username: username,
                 kbis: kbis,
                 email: email,
-                roles: ["merchant", "user"],
+                roles: ["merchant"],
                 devise: null,
                 contact: null,
                 company: company,
@@ -166,7 +166,7 @@ export default function Register() {
         .then((responseData) => {
             if(responseData.message == 'User was registered successfully!'){
                 setSendForm(true)
-                setTimeout(function(){ 
+                setTimeout(function(){
                     window.location.replace(window.location.origin + '/#/login')
                 }, 5000);
             }else{
@@ -176,7 +176,7 @@ export default function Register() {
                 }else {
                     setErrorUsername('')
                 }
-                
+
                 if(errorMessage == 'Failed! Email is already in use!'){
                     setErrorEmail('L\'email saisi est déjà utilisé')
                 }else {
@@ -252,8 +252,8 @@ export default function Register() {
                 <DoneIcon/>
             </Avatar>
             <p className={classes.para}>
-                Votre inscription a bien été prise en compte, félicitations ! 
-                
+                Votre inscription a bien été prise en compte, félicitations !
+
                 Vous allez être redirigé sur la page de connexion dans quelques secondes.
             </p>
         </div>
