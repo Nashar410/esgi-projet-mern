@@ -272,6 +272,7 @@ export default function Register() {
                     <Typography component="h1" variant="h5">
                         Créer mon compte marchand
                     </Typography>
+                    {elementConfirmSend}
                     <form className={classes.form} onSubmit={(event) => handleSubmit(event)}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
@@ -356,7 +357,6 @@ export default function Register() {
                             Créer mon compte
                         </Button>
                     </form>
-                    {elementConfirmSend}
                 </div>
             </Container>
         </React.Fragment>
