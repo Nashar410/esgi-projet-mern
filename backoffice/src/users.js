@@ -29,7 +29,6 @@ export const UserEdit = props => (
             <TextInput source="contact" />
             <TextInput source="company" />
             <BooleanInput source="confirmed" />
-            <TextInput source="password" />
         </SimpleForm>
     </Edit>
 );
