@@ -3,7 +3,7 @@ import {useGetIdentity} from 'react-admin';
 import CardContent from '@material-ui/core/CardContent';
 import {Title} from 'react-admin';
 import Budget from "./dashboard/Budget";
-import {Grid} from "@material-ui/core";
+import {Box, Grid} from "@material-ui/core";
 import TotalProfit from "./dashboard/TotalProfit";
 import TasksProgress from "./dashboard/TasksProgress";
 import TotalCustomers from "./dashboard/TotalCustomers";
@@ -15,7 +15,7 @@ export const Dashboard = () => {
         <React.Fragment>
             <Title title="Amazon.fr"/>
             {identity === 'true' ?
-                <Container maxWidth={false}>
+                <Container>
                     <Grid
                         container
                         spacing={3}
@@ -27,7 +27,9 @@ export const Dashboard = () => {
                             xl={3}
                             xs={12}
                         >
-                            <Budget/>
+                            <Box pt={3}>
+                                <Budget/>
+                            </Box>
                         </Grid>
                         <Grid
                             item
@@ -36,7 +38,9 @@ export const Dashboard = () => {
                             xl={3}
                             xs={12}
                         >
-                            <TotalProfit/>
+                            <Box pt={3}>
+                                <TotalProfit/>
+                            </Box>
                         </Grid>
                         <Grid
                             item
@@ -45,7 +49,9 @@ export const Dashboard = () => {
                             xl={3}
                             xs={12}
                         >
-                            <TasksProgress/>
+                            <Box pt={3}>
+                                <TasksProgress/>
+                            </Box>
                         </Grid>
                         <Grid
                             item
@@ -54,7 +60,9 @@ export const Dashboard = () => {
                             xl={3}
                             xs={12}
                         >
-                            <TotalCustomers/>
+                            <Box pt={3}>
+                                <TotalCustomers/>
+                            </Box>
                         </Grid>
                     </Grid>
                 </Container>
