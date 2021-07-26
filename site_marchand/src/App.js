@@ -13,27 +13,24 @@ import ListTransactionProvider from './contexts/ListTransactionContext';
 
 function App() {
 
-    const isLogged = () => !!localStorage.getItem("credential");
-
     return (
         <div className="App">
             <BrowserRouter>
                 <CredentialProvider>
-                    <Header auth={isLogged}/>
+                    <Header/>
                     <div className="w3-container w3-margin">
                         <Switch>
                             <Route exact path="/">
-                                {!isLogged() && <Credentials/>}
-                                {isLogged() && <Redirect to="/panier"/>}
+                                <Credentials/>
                             </Route>
-                            <GuardedRoute path="/transactions" auth={isLogged}
-                                          render={
-                                              () => <ListTransactionProvider>
-                                                  <ListTransaction/>
-                                              </ListTransactionProvider>}/>
+                            <Route exact path="/transactions" render={() =>
+                                (<ListTransactionProvider>
+                                    <ListTransaction/>
+                                </ListTransactionProvider>)
+                            }/>
                             <ListProvider>
-                                <Route path="/panier" component={Page} auth={isLogged}/>
-                                <GuardedRoute path="/items/:id" component={ShowItem} auth={isLogged}/>
+                                <Route path="/panier" component={Page}/>
+                                <Route path="/items/:id" component={ShowItem}/>
                             </ListProvider>
 
                         </Switch>

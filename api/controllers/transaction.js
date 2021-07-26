@@ -13,19 +13,29 @@ exports.create = (req, res) => {
     }
 
     // Create a Transaction
-    const Transation = {
+    const transaction = {
+        userId: req.userId,
         type: req.body.type,
-        total: req.body.total,
+        total: req.body.totalPrice,
         cart: req.body.cart,
         currency: req.body.currency,
         quantity: req.body.quantity,
-        userId: req.userId
+        consumerLastname: "Foo",
+        consumerFirstname: "Bart",
+        billingAddress:  "1 rue Bouvier",
+        billingZipCode: "75011",
+        billingCity: "Paris",
+        billingCountry: "France",
+        shippingAddress: "1 rue Bouvier",
+        shippingZipCode: "75011",
+        shippingCity: "Paris",
+        shippingCountry: "France",
     };
 
     // Save Transactions in the database
-    TransactionDB.create(Transation)
+    TransactionDB.create(transaction)
         .then(data => {
-            res.send(data);
+            res.send(Array.isArray(data) ? data : [data]);
         })
         .catch(err => {
             res.status(500).send({
@@ -40,8 +50,8 @@ exports.findAll = (req, res) => {
     TransactionDB.findAll()
         .then(data => {
             res.set('Access-Control-Expose-Headers', 'X-Total-Count')
-            res.set('X-Total-Count', data.length)
-            res.send(data);
+            res.set('X-Total-Count', Array.isArray(data) ? data.length : 1)
+            res.send(Array.isArray(data) ? data : [data]);
         })
         .catch(err => {
             res.status(500).send({

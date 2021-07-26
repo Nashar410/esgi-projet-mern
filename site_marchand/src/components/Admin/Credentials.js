@@ -10,7 +10,7 @@ export default function Credentials() {
     <>
       <CredentialsForm
         onSubmit={(values) => {
-            save(values.clientToken, values.clientSecret);
+            save(values.clientId, values.clientSecret);
             history.push('/panier');
         }}
         defaultValues={decodeCredentials}

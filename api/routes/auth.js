@@ -1,7 +1,6 @@
 module.exports = app => {
     const {verifySignUp} = require("../middleware");
     const auth = require("../controllers/auth");
-
     var router = require("express").Router();
 
     router.use(function (req, res, next) {
@@ -23,8 +22,6 @@ module.exports = app => {
     );
 
     router.post("/signin", auth.signin);
-
-    router.post('/merchant/signin', auth.merchantSignin);
 
     app.use('/api/auth', router);
 };

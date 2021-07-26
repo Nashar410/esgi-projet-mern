@@ -37,9 +37,6 @@ exports.signup = (req, res) => {
                 await user.setRoles([1]);
             }
 
-            // Generate credentials
-            await generateCredentials(user);
-
             // Resend OK
             res.status(200).send({message: "User was registered successfully!", user});
 
@@ -72,12 +69,6 @@ exports.signin = (req, res) => {
                 });
             }
 
-            // Generate credentials if not exist
-            let userCred = await user.getCredential();
-            if (!userCred || !userCred.clientToken) {
-                userCred = await generateCredentials(user);
-            }
-
             const authorities = [];
             user.getRoles().then(roles => {
                 for (let i = 0; i < roles.length; i++) {
@@ -100,30 +91,20 @@ exports.signin = (req, res) => {
 };
 
 exports.merchantSignin = async (req, res) => {
-    try {
-        // extraction et vérif du token
-        const tokenSupplied = req.body.clientToken;
-        const info = await verifyJWT(tokenSupplied, config.development.secret);
+
+    // extraction et vérif du token
         const user = await User.findOne({
             where: {
-                "id": info.id
+                "id": req.body.clientId,
             }
         });
+        const credential = await user.getCredential();
 
-        if(user?.id){
+        if(credential.clientSecret === req.body.clientSecret){
             res.status(200).send({message: "Logged !" });
         } else {
             res.status(404).send({message: "User Not found."});
         }
-
-
-    } catch (err) {
-        res.status(401).send({message: "Wrong token !", err})
-    }
-};
-
-async function verifyJWT(token, secret) {
-    return jwt.verify(token, secret);
 }
 
 async function generateCredentials (user) {
