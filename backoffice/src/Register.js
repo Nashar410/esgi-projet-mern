@@ -9,7 +9,6 @@ import DoneIcon from '@material-ui/icons/Done';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { element } from "prop-types";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -70,28 +69,28 @@ export default function Register() {
         let nameAttribut = event.target.name
         let valueInput = event.target.value
 
-        if(nameAttribut == 'firstName') {
+        if(nameAttribut === 'firstName') {
             setFname(valueInput)
             event.target.setAttribute('error', '')
         }
-        else if(nameAttribut == 'lastName') {
+        else if(nameAttribut === 'lastName') {
             setLname(valueInput)
         }
-        else if(nameAttribut == 'username') {
+        else if(nameAttribut === 'username') {
             setUsername(valueInput)
             setErrorUsername('')
         }
-        else if(nameAttribut == 'company') {
+        else if(nameAttribut === 'company') {
             setCompany(valueInput)
         }
-        else if(nameAttribut == 'kbis') {
+        else if(nameAttribut === 'kbis') {
             setKbis(valueInput)
         }
-        else if(nameAttribut == 'email') {
+        else if(nameAttribut === 'email') {
             setEmail(valueInput)
             setErrorEmail('')
         }
-        else if(nameAttribut == 'password') {
+        else if(nameAttribut === 'password') {
             setPassword(valueInput)
         }
 
@@ -101,31 +100,31 @@ export default function Register() {
 
         let isValid = 0;
 
-        if(fname != ''){
+        if(fname !== ''){
             isValid += 1;
         }
 
-        if(lname != ''){
+        if(lname !== ''){
             isValid += 1;
         }
 
-        if(username != ''){
+        if(username !== ''){
             isValid += 1;
         }
 
-        if(company != ''){
+        if(company !== ''){
             isValid += 1;
         }
 
-        if(kbis != ''){
+        if(kbis !== ''){
             isValid += 1;
         }
 
-        if(email != ''){
+        if(email !== ''){
             isValid += 1;
         }
 
-        if(password != ''){
+        if(password !== ''){
             isValid += 1;
         }
 
@@ -164,20 +163,20 @@ export default function Register() {
         })
         .then((response) => response.json())
         .then((responseData) => {
-            if(responseData.message == 'User was registered successfully!'){
+            if(responseData.message === 'User was registered successfully!'){
                 setSendForm(true)
                 setTimeout(function(){
                     window.location.replace(window.location.origin + '/#/login')
                 }, 5000);
             }else{
                 errorMessage = responseData.message;
-                if(errorMessage == 'Failed! Username is already in use!'){
+                if(errorMessage === 'Failed! Username is already in use!'){
                     setErrorUsername('Le Username est déjà utilisé')
                 }else {
                     setErrorUsername('')
                 }
 
-                if(errorMessage == 'Failed! Email is already in use!'){
+                if(errorMessage === 'Failed! Email is already in use!'){
                     setErrorEmail('L\'email saisi est déjà utilisé')
                 }else {
                     setErrorEmail('')
@@ -188,7 +187,7 @@ export default function Register() {
         event.preventDefault();
     }
 
-    if(errorUsername != ''){
+    if(errorUsername !== ''){
         elementTextFieldUsername = <TextField
             error
             onChange={(event) => handleChange(event)}
@@ -217,7 +216,7 @@ export default function Register() {
         />
     }
 
-    if(errorEmail != ''){
+    if(errorEmail !== ''){
         elementTextFieldEmail = <TextField
             error
             onChange={(event) => handleChange(event)}
