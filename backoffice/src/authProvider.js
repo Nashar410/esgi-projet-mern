@@ -37,7 +37,7 @@ export default {
     },
     getPermissions: () => {
         const role = localStorage.getItem('permissions');
-        return role ? Promise.resolve(role) : Promise.reject();
+        return role ? Promise.resolve(role) : Promise.resolve('guest')
     },
     getIdentity : () => {
         const confirmed = localStorage.getItem("confirmed");
