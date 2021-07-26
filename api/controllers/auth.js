@@ -37,9 +37,6 @@ exports.signup = (req, res) => {
                 await user.setRoles([1]);
             }
 
-            // Generate credentials
-            await generateCredentials(user);
-
             // Resend OK
             res.status(200).send({message: "User was registered successfully!", user});
 
@@ -72,12 +69,6 @@ exports.signin = (req, res) => {
                 });
             }
 
-            // Generate credentials if not exist
-            let userCred = await user.getCredential();
-            if (!userCred || !userCred.clientToken) {
-                userCred = await generateCredentials(user);
-            }
-
             const authorities = [];
             user.getRoles().then(roles => {
                 for (let i = 0; i < roles.length; i++) {
@@ -100,23 +91,20 @@ exports.signin = (req, res) => {
 };
 
 exports.merchantSignin = async (req, res) => {
-    res.status(200).send({message: "Logged !" });
 
-/*    // extraction et vérif du token
-        const credential = await Credential.findOne({
+    // extraction et vérif du token
+        const user = await User.findOne({
             where: {
-                "user.id": req.body.clientId,
-                "clientSecret": req.body.clientSecret
-            },
-            include: User
+                "id": req.body.clientId,
+            }
         });
-        console.log(credential);
+        const credential = await user.getCredential();
 
-        if(credential?.userId){
+        if(credential.clientSecret === req.body.clientSecret){
             res.status(200).send({message: "Logged !" });
         } else {
             res.status(404).send({message: "User Not found."});
-        }*/
+        }
 }
 
 async function generateCredentials (user) {

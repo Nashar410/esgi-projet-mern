@@ -13,9 +13,6 @@ export default function List() {
         setSelectedItem(item);
     };
 
-    const isLogged = () => !!localStorage.getItem("credential");
-
-
     return (
         <div>
             <AddEditItem selectedItem={selectedItem}/>
@@ -25,7 +22,7 @@ export default function List() {
                 ))}
             </ul>
             <p className={'w3-panel w3-card-4 w3-pale-yellow'}>Prix total: {totalPrice}</p>
-            {!!isLogged() && <CreateTransactionButton/>}
+            <CreateTransactionButton/>
         </div>
     );
 }

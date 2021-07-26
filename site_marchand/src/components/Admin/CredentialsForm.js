@@ -8,8 +8,7 @@ const defaultV = {
 };
 
 export default function CredentialsForm({onSubmit, defaultValues}) {
-    const { token } = useContext(CredentialContext);
-    console.log(token);
+
     const [values, setValues] = useState(defaultValues || defaultV);
 
     const _onSubmit = () => {
@@ -27,27 +26,17 @@ export default function CredentialsForm({onSubmit, defaultValues}) {
         <form className={'w3-form w3-content'} style={{width: 40 + '%'}}
               onSubmit={(event) => {
                   event.preventDefault();
-                  // Vérifier si l'utilisateur existe
-                  fetch("http://localhost:3000/api/auth/merchant/signin", {
-                      method: "POST",
-                      headers: {
-                          "Content-Type": "application/json",
-                          "x-access-token": "BASIC " + token
-                      },
-                      body: JSON.stringify({
-                          clientId: values.clientId,
-                          clientSecret: values.clientSecret
-                      }),
-                  })
-                      .then((res) => res.json())
-                      .then((data) => {
-                          console.log(data)
-                          _onSubmit();
-                      });
+                  const formData = new FormData(event.target);
+                  const data = Array.from(formData.keys).reduce((acc, key) => {
+                      acc[key] = formData.get(key);
+                      return acc;
+                  }, {});
+                  console.log("submit Vanilla", data);
+                  _onSubmit();
               }}
         >
             <input
-                placeholder={`Inscrire l'username du client ici...`}
+                placeholder={`Inscrire l'ID du client ici...`}
                 className={'w3-input w3-border'}
                 value={values.clientId}
                 onChange={handleChange}

@@ -10,7 +10,7 @@ export default function ItemTransaction({item}) {
             <span className={'w3-col s2 m2 l2'}>{item.id}</span>
             <span className={'w3-col s2 m2 l2'}>{(new Date(item.createdAt)).toDateString()}</span>
             <span className={'w3-col s2 m2 l2'}>{item.total}</span>
-            <span className={'w3-col s2 m2 l2'}>{item.cart}</span>
+            <span className={'w3-col s2 m2 l2'}>{item.cart.map((it) => it.name + " ")}</span>
             <span className={'w3-col s2 m2 l2'}>{item.currency}</span>
             {item.type === 'REFUND'
             && <Button className={'w3-col s2 m2 l2 w3-button w3-red'} title="Remboursement"

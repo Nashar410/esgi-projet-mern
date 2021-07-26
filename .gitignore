@@ -1,3 +1,14 @@
 .idea/
 **/node_modules
 node_modules/
+
+
+# package-lock
+package-lock.json
+/api/package-lock.json
+/backoffice/package-lock.json
+/database/package-lock.json
+/mongo/package-lock.json
+/psp/package-lock.json
+/scrapper/package-lock.json
+/site_marchand/package-lock.json

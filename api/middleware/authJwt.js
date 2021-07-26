@@ -24,20 +24,19 @@ verifyToken = (req, res, next) => {
 };
 
 verifyBasicToken = (req, res, next) => {
-    let token = req.headers["x-access-token"];
+    let authorization = req.headers["authorization"];
+    const [clientId, clientSecret] = atob(authorization.split('Basic ')[1]).split(':');
 
-    if (!token) {
+    if (!authorization) {
         return res.status(403).send({
-            message: "No token provided!"
+            message: "No authorization provided!"
         });
     }
-
-    const [clientId, clientSecret] = atob(token).split(':');
 
     if (clientId && clientSecret) {
         next();
     } else {
-        return res.status(401).send({
+        res.status(401).send({
             message: "Unauthorized!"
         });
     }

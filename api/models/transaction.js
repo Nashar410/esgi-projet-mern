@@ -21,7 +21,16 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        quantity: DataTypes.INTEGER,
+        consumerLastname: DataTypes.STRING,
+        consumerFirstname: DataTypes.STRING,
+        billingAddress: DataTypes.STRING,
+        billingZipCode: DataTypes.STRING,
+        billingCity: DataTypes.STRING,
+        billingCountry: DataTypes.STRING,
+        shippingAddress: DataTypes.STRING,
+        shippingZipCode: DataTypes.STRING,
+        shippingCity: DataTypes.STRING,
+        shippingCountry: DataTypes.STRING
     }, {
         sequelize,
         modelName: 'Transaction',
