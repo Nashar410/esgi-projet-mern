@@ -20,9 +20,9 @@ const App = () => (
 
 <Admin dashboard={Dashboard} customRoutes={customRoutes} authProvider={authProvider} dataProvider={dataProvider}>
     {permissions => [
-        permissions === 'ROLE_USER,ROLE_MERCHANT'
+        permissions === 'ROLE_ADMIN'
             ? <Resource name="users" list={UserList} edit={UserEdit}/>
-            : <p>You don't have access</p>
+            : <p></p>
     ]}
 </Admin>
 );
