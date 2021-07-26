@@ -1,7 +1,7 @@
 module.exports = app => {
     const {verifySignUp} = require("../middleware");
     const auth = require("../controllers/auth");
-
+    const authJWT = require("../middleware/authJwt.js");
     var router = require("express").Router();
 
     router.use(function (req, res, next) {

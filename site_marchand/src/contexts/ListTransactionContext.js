@@ -14,7 +14,6 @@ export default function ListTransactionProvider({ children }) {
     }, []);
 
     const {clientToken} = {...JSON.parse(localStorage.getItem('credential'))};
-    console.log("test", 'adzadaadada');
 
     const getTransactions = async () => {
         const response = await fetch(

@@ -1,12 +1,15 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import Button from "../lib/Button";
+import {CredentialContext} from '../../contexts/CredentialContext.js';
 
 const defaultV = {
-    clientToken: "",
+    clientId: "",
     clientSecret: "",
 };
 
 export default function CredentialsForm({onSubmit, defaultValues}) {
+    const { token } = useContext(CredentialContext);
+    console.log(token);
     const [values, setValues] = useState(defaultValues || defaultV);
 
     const _onSubmit = () => {
@@ -28,16 +31,17 @@ export default function CredentialsForm({onSubmit, defaultValues}) {
                   fetch("http://localhost:3000/api/auth/merchant/signin", {
                       method: "POST",
                       headers: {
-                          "Content-Type": "application/json"
+                          "Content-Type": "application/json",
+                          "x-access-token": "BASIC " + token
                       },
                       body: JSON.stringify({
-                          clientToken: values.clientToken,
+                          clientId: values.clientId,
                           clientSecret: values.clientSecret
                       }),
                   })
                       .then((res) => res.json())
                       .then((data) => {
-
+                          console.log(data)
                           _onSubmit();
                       });
               }}
@@ -45,10 +49,10 @@ export default function CredentialsForm({onSubmit, defaultValues}) {
             <input
                 placeholder={`Inscrire l'username du client ici...`}
                 className={'w3-input w3-border'}
-                value={values.clientToken}
+                value={values.clientId}
                 onChange={handleChange}
                 type="text"
-                name="clientToken"/>
+                name="clientId"/>
             <input
                 placeholder={`Inscrire le client secret ici...`}
                 className={'w3-input w3-border'}

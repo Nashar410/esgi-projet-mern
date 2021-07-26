@@ -28,7 +28,7 @@ app.get("*", (req, res) => {
 
     if(!!infoCB && !!price && !!devise && !!idTransaction){
         handlePayment(idTransaction);
-        res.status(200).send("Processing");
+        res.status(202).send("Processing");
     } else {
         res.status(400).send("Wrong number of get params");
     }

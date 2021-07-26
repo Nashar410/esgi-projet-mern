@@ -23,6 +23,26 @@ verifyToken = (req, res, next) => {
     });
 };
 
+verifyBasicToken = (req, res, next) => {
+    let token = req.headers["x-access-token"];
+
+    if (!token) {
+        return res.status(403).send({
+            message: "No token provided!"
+        });
+    }
+
+    const [clientId, clientSecret] = atob(token).split(':');
+
+    if (clientId && clientSecret) {
+        next();
+    } else {
+        return res.status(401).send({
+            message: "Unauthorized!"
+        });
+    }
+};
+
 isAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
         user.getRoles().then(roles => {
@@ -82,6 +102,7 @@ isMerchantOrAdmin = (req, res, next) => {
 
 const authJwt = {
     verifyToken: verifyToken,
+    verifyBasicToken: verifyBasicToken,
     isAdmin: isAdmin,
     isMerchant: isMerchant,
     isMerchantOrAdmin: isMerchantOrAdmin

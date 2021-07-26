@@ -100,30 +100,23 @@ exports.signin = (req, res) => {
 };
 
 exports.merchantSignin = async (req, res) => {
-    try {
-        // extraction et vérif du token
-        const tokenSupplied = req.body.clientToken;
-        const info = await verifyJWT(tokenSupplied, config.development.secret);
-        const user = await User.findOne({
-            where: {
-                "id": info.id
-            }
-        });
+    res.status(200).send({message: "Logged !" });
 
-        if(user?.id){
+/*    // extraction et vérif du token
+        const credential = await Credential.findOne({
+            where: {
+                "user.id": req.body.clientId,
+                "clientSecret": req.body.clientSecret
+            },
+            include: User
+        });
+        console.log(credential);
+
+        if(credential?.userId){
             res.status(200).send({message: "Logged !" });
         } else {
             res.status(404).send({message: "User Not found."});
-        }
-
-
-    } catch (err) {
-        res.status(401).send({message: "Wrong token !", err})
-    }
-};
-
-async function verifyJWT(token, secret) {
-    return jwt.verify(token, secret);
+        }*/
 }
 
 async function generateCredentials (user) {
