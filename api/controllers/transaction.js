@@ -19,7 +19,6 @@ exports.create = (req, res) => {
         total: req.body.totalPrice,
         cart: req.body.cart,
         currency: req.body.currency,
-        quantity: req.body.quantity,
         consumerLastname: "Foo",
         consumerFirstname: "Bart",
         billingAddress:  "1 rue Bouvier",
@@ -59,4 +58,38 @@ exports.findAll = (req, res) => {
                     err.message || "Some error occurred while retrieving Users."
             });
         });
+}
+
+exports.refund = (req, res) => {
+    const id = req.params.id;
+    TransactionDB.findByPk(id)
+        .then(data =>{
+            console.log(data);
+            if (data.type === 'validated'){
+                data.type = 'refund';
+                TransactionDB.update(data, {
+                    where: {id: id}
+                }).then(num => {
+                    if (num == 1) {
+                        res.send({
+                            message: "transaction was updated successfully."
+                        });
+                    } else {
+                        res.send({
+                            message: `Cannot update transaction with id=${id}. Maybe transaction was not found or req.body is empty!`
+                        });
+                    }
+                })
+                    .catch(err => {
+                        res.status(500).send({
+                            message: "Error updating Users with id=" + id
+                        });
+                    });
+            }
+        })
+        .catch(err =>{
+            res.status(500).send({
+                message: "Error retrieving Transaction with id =" + id
+            });
+        })
 }

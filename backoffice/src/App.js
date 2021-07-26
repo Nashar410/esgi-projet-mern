@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Admin, Resource, fetchUtils} from 'react-admin';
+import {Admin, Resource, fetchUtils, useGetIdentity} from 'react-admin';
 import simpleRestProvider from 'ra-data-simple-rest';
 import {UserList, UserEdit} from './Users';
 import customRoutes from "./customRoutes";
@@ -24,7 +24,7 @@ const App = () => (
             ? <Resource name="users" list={UserList} edit={UserEdit}/>
             : <p></p>
     ]}
-</Admin>
+        </Admin>
 );
 
 export default App;

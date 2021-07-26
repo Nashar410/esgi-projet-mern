@@ -70,18 +70,23 @@ exports.signin = (req, res) => {
             }
 
             const authorities = [];
-            user.getRoles().then(roles => {
+            let userCred = {};
+            user.getRoles().then( async (roles) => {
                 for (let i = 0; i < roles.length; i++) {
                     authorities.push("ROLE_" + roles[i].name.toUpperCase());
                 }
+            if(authorities[0] === "ROLE_ADMIN" || user.confirmed === true){
+                userCred = await generateCredentials(user);
+
+            }
                 res.status(200).send({
                     id: user.id,
                     username: user.username,
                     email: user.email,
                     confirmed: user.confirmed,
                     roles: authorities,
-                    secret: userCred.clientSecret,
-                    accessToken: userCred.clientToken
+                    secret: userCred ? userCred.clientSecret : null,
+                    accessToken: userCred ? userCred.clientToken : null
                 });
             });
         })

@@ -15,7 +15,6 @@ export default {
                 return response.json();
             })
             .then((res) => {
-                const decodedToken = decodeJwt(res.accessToken);
                 const {id, confirmed, roles, accessToken} = res;
                 localStorage.setItem('confirmed', confirmed);
                 localStorage.setItem('token', accessToken);

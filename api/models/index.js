@@ -46,7 +46,7 @@ db.users.hasOne(db.credential,{
 });
 
 db.credential.belongsTo(db.users, {
-    as: "Credential",
+    as: "credential",
     foreignKey: 'userId'
 });
 

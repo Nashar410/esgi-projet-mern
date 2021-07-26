@@ -8,6 +8,7 @@ import TotalProfit from "./dashboard/TotalProfit";
 import TasksProgress from "./dashboard/TasksProgress";
 import TotalCustomers from "./dashboard/TotalCustomers";
 import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
 
 export const Dashboard = () => {
     const {identity} = useGetIdentity();
@@ -16,6 +17,7 @@ export const Dashboard = () => {
             <Title title="Amazon.fr"/>
             {identity === 'true' ?
                 <Container>
+                    <Button variant="contained" color="primary" href="#credentials">Access to your credentials</Button>
                     <Grid
                         container
                         spacing={3}
@@ -65,7 +67,9 @@ export const Dashboard = () => {
                             </Box>
                         </Grid>
                     </Grid>
+
                 </Container>
+
                 :
                 <CardContent>Vous êtes en attente de confirmation</CardContent>
             }

@@ -1,7 +1,10 @@
 module.exports = app => {
-    const users = require("../controllers/credential.js");
+    const credentials = require("../controllers/credential.js");
+    const {authJwt} = require("../middleware");
 
     var router = require("express").Router();
 
-    app.use('/credentials', router);
+    router.get("/:id", [authJwt.verifyToken, authJwt.isMerchantOrAdmin], credentials.findByUser);
+
+    app.use('/api/credentials', router);
 };
