@@ -2,6 +2,7 @@ const db = require("../models");
 const config = require("../config/config");
 const User = db.users;
 const Role = db.role;
+const Credential = db.credential;
 
 const Op = db.Sequelize.Op;
 
@@ -11,11 +12,12 @@ var bcrypt = require("bcryptjs");
 exports.signup = (req, res) => {
     // Save User to Database
     User.create({
+        ... req.body,
         username: req.body.username,
         email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 8)
+        password: bcrypt.hashSync(req.body.password, 8),
     })
-        .then(user => {
+        .then(async user => {
             if (req.body.roles) {
                 Role.findAll({
                     where: {
@@ -23,17 +25,20 @@ exports.signup = (req, res) => {
                             [Op.or]: req.body.roles
                         }
                     }
-                }).then(roles => {
-                    user.setRoles(roles).then(() => {
-                        res.send({message: "User was registered successfully!"});
-                    });
+                }).then(async roles => {
+                    await user.setRoles(roles);
                 });
             } else {
                 // user role = 1
-                user.setRoles([1]).then(() => {
-                    res.send({message: "User was registered successfully!"});
-                });
+                await user.setRoles([1]);
             }
+
+            // Generate credentials
+            await generateCredentials(user);
+
+            // Resend OK
+            res.status(200).send({message: "User was registered successfully!", user});
+
         })
         .catch(err => {
             res.status(500).send({message: err.message});
@@ -46,7 +51,7 @@ exports.signin = (req, res) => {
             username: req.body.username
         }
     })
-        .then(user => {
+        .then(async (user) => {
             if (!user) {
                 return res.status(404).send({message: "User Not found."});
             }
@@ -63,11 +68,13 @@ exports.signin = (req, res) => {
                 });
             }
 
-            var token = jwt.sign({id: user.id}, config.development.secret, {
-                expiresIn: 86400 // 24 hours
-            });
+            // Generate credentials if not exist
+            let userCred = await user.getCredential();
+            if (!userCred || !userCred.clientToken) {
+                userCred = await generateCredentials(user);
+            }
 
-            var authorities = [];
+            const authorities = [];
             user.getRoles().then(roles => {
                 for (let i = 0; i < roles.length; i++) {
                     authorities.push("ROLE_" + roles[i].name.toUpperCase());
@@ -78,7 +85,8 @@ exports.signin = (req, res) => {
                     email: user.email,
                     confirmed: user.confirmed,
                     roles: authorities,
-                    accessToken: token
+                    secret: userCred.clientSecret,
+                    accessToken: userCred.clientToken
                 });
             });
         })
@@ -86,3 +94,45 @@ exports.signin = (req, res) => {
             res.status(500).send({message: err.message});
         });
 };
+
+exports.merchantSignin = async (req, res) => {
+    try {
+        // extraction et vérif du token
+        const tokenSupplied = req.body.clientToken;
+        const info = await verifyJWT(tokenSupplied, config.development.secret);
+        const user = await User.findOne({
+            where: {
+                "id": info.id
+            }
+        });
+
+        if(user?.id){
+            res.status(200).send({message: "Logged !" });
+        } else {
+            res.status(404).send({message: "User Not found."});
+        }
+
+
+    } catch (err) {
+        res.status(401).send({message: "Wrong token !", err})
+    }
+};
+
+async function verifyJWT(token, secret) {
+    return jwt.verify(token, secret);
+}
+
+async function generateCredentials (user) {
+
+    const clientToken = jwt.sign({id: `${user.id}`}, config.development.secret, {
+        expiresIn: 86400 // 24 hours
+    });
+    const clientSecret = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
+    const credentials = await Credential.create({
+        clientSecret,
+        clientToken
+    });
+    await user.setCredential(credentials);
+    await user.save();
+    return await user.getCredential();
+}

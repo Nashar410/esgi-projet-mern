@@ -1,45 +1,23 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./Modal.css";
 
-export default function Modal({ title, children, open, onClose }) {
-  useEffect(() => {
-    console.log("open updated", open);
+export default function Modal({title, children, open, onClose}) {
 
-    return () => {
-      console.log("willUpdate", open);
-    };
-  }, [open]);
+    return (
+        open && (
+            <>
+                <div className="overlay" onClick={onClose}/>
+                <div className="modal w3-section">
+                    <div className="modal-title">
+                        <button onClick={onClose} className="close-modal">
+                            X
+                        </button>
+                        <h2 className={'w3-margin'}>{title}</h2>
 
-  useEffect(() => {
-    console.log("title updated", title);
-
-    return () => {
-      console.log("willUpdate", title);
-    };
-  }, [title]);
-
-  useEffect(() => {
-    console.log("did mount");
-
-    return () => {
-      console.log("willUnmount");
-    };
-  }, []);
-
-  return (
-    open && (
-      <>
-        <div className="overlay" onClick={onClose} />
-        <div className="modal">
-          <div className="modal-title">
-            <h2>{title}</h2>
-            <button onClick={onClose} className="close-modal">
-              CLOSE
-            </button>
-          </div>
-          <div className="modal-content">{children}</div>
-        </div>
-      </>
-    )
-  );
+                    </div>
+                    <div className="modal-content w3-section">{children}</div>
+                </div>
+            </>
+        )
+    );
 }

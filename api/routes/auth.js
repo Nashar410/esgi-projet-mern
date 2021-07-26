@@ -24,5 +24,7 @@ module.exports = app => {
 
     router.post("/signin", auth.signin);
 
+    router.post('/merchant/signin', auth.merchantSignin);
+
     app.use('/api/auth', router);
 };

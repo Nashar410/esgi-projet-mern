@@ -19,9 +19,9 @@ export default function AddEditItem({ selectedItem = false }) {
 
   return (
     <>
-      <Button title="add" onClick={() => setModal(true)} />
+      <Button className={'w3-button w3-blue'} title="Ajouter" onClick={() => setModal(true)} />
       <Modal
-        title="Add product"
+        title="Ajouter un produit"
         open={Boolean(modal)}
         onClose={() => setModal(false)}
       >

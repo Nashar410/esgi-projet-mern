@@ -22,34 +22,32 @@ export default function Form({ onSubmit, item }) {
   };
 
   return (
-    <form
+    <form className={'w3-container w3-section'}
       onSubmit={(event) => {
         event.preventDefault();
         // Vanilla JS approch
-        const formData = new FormData(event.target);
-        const data = Array.from(formData.keys).reduce((acc, key) => {
-          acc[key] = formData.get(key);
-          return acc;
-        }, {});
-        console.log("submit Vanilla", data);
+        // const formData = new FormData(event.target);
+        // const data = Array.from(formData.keys).reduce((acc, key) => {
+        //   acc[key] = formData.get(key);
+        //   return acc;
+        // }, {});
         _onSubmit();
       }}
     >
-      <input value={values.name} onChange={handleChange} name="name" />
-      <input
+      <input className={'w3-input w3-border'} value={values.name} onChange={handleChange} name="name" />
+      <input className={'w3-input w3-border'}
         value={values.quantity}
         onChange={handleChange}
         type="number"
         name="quantity"
       />
-      <input
+      <input className={'w3-input w3-border'}
         value={values.unitPrice}
         onChange={handleChange}
         type="number"
         name="unitPrice"
       />
-      <a onClick={(e) => _onSubmit()}>Submit</a>
-      <Button title="Submit Form" />
+      <Button className={'w3-button w3-blue w3-section'} title="Submit Form" />
     </form>
   );
 }

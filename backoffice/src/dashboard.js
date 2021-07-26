@@ -8,16 +8,14 @@ import {Title} from 'react-admin';
 export const Dashboard = () => {
     const {loading, loaded, identity} = useGetIdentity();
     // const {data : currentUser} = useGetOne('users', identity);
-    console.log(identity);
     return (
         <Card>
             <Title title="Welcome to the administration"/>
-            {identity=== 'true' ?
+            {identity === 'true' ?
                 <CardContent>Bienvenue ! Voici votre dashboard ! </CardContent>
                 :
                 <CardContent>Vous êtes en attente de confirmation</CardContent>
             }
-
         </Card>)
 
 };

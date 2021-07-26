@@ -7,7 +7,6 @@ export default function ShowItem() {
   const { getItem, isReady } = useContext(ListContext);
 
   const item = useMemo(() => getItem(parseInt(id)), [id, isReady]);
-  console.log(item);
   return (
     <p>
       {!isReady && "Loading ...."}

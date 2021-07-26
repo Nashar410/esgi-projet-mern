@@ -2,7 +2,7 @@ import decodeJwt from 'jwt-decode';
 
 export default {
     login: ({username, password}) => {
-        const request = new Request(`http://0.0.0.0:3000/api/auth/signin`, {
+        const request = new Request(`http://localhost:3000/api/auth/signin`, {
             method: 'POST',
             body: JSON.stringify({username, password}),
             headers: new Headers({'Content-Type': 'application/json'}),
