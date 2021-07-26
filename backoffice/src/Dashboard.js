@@ -8,6 +8,8 @@ import TotalProfit from "./dashboard/TotalProfit";
 import TasksProgress from "./dashboard/TasksProgress";
 import TotalCustomers from "./dashboard/TotalCustomers";
 import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
+import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 import Button from "@material-ui/core/Button";
 
 export const Dashboard = () => {
@@ -67,11 +69,31 @@ export const Dashboard = () => {
                             </Box>
                         </Grid>
                     </Grid>
-
                 </Container>
-
                 :
-                <CardContent>Vous êtes en attente de confirmation</CardContent>
+                <Box
+                    sx={{
+                        backgroundColor: 'background.default',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '100%',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <Container maxWidth="md">
+                        <Box sx={{textAlign: 'center'}}>
+                            <AccessAlarmIcon style={{ fontSize: 50 }}/>
+                        </Box>
+
+                        <Typography
+                            align="center"
+                            color="textPrimary"
+                            variant="h4"
+                        >
+                            Vous êtes en attente de confirmation
+                        </Typography>
+                    </Container>
+                </Box>
             }
         </React.Fragment>
     )
