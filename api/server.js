@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 const db = require("./models");
 const Role = db.role;
+const mustacheExpress = require('mustache-express');
 
 app.use(cors());
 
@@ -38,6 +39,16 @@ function initial() {
 app.get("/", (req, res) => {
     res.json({message: "API projet MERN ESGI Groupe 1 : Lima Milan, Edouard Gachet, Jacquenet Jean Christophe, Thomas Lemoine."});
 });
+
+app.get("/payment/:id", (req, res) => {
+    app.engine('mustache', mustacheExpress());
+
+    app.set('view engine', 'mustache');
+    app.set('views', __dirname + '/views');
+
+    res.render('payment');
+});
+
 
 require("./routes/user")(app);
 require("./routes/auth")(app);
