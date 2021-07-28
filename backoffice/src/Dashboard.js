@@ -1,6 +1,7 @@
-import * as React from "react";
+import * as React from 'react';
+import {useState, useEffect} from 'react';
+import {useDataProvider, Loading, Error, fetchUtils} from 'react-admin';
 import {useGetIdentity} from 'react-admin';
-import CardContent from '@material-ui/core/CardContent';
 import {Title} from 'react-admin';
 import Budget from "./dashboard/Budget";
 import {Box, Grid} from "@material-ui/core";
@@ -14,7 +15,34 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Button from "@material-ui/core/Button";
 
 export const Dashboard = ({permissions, ...props}) => {
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState();
+    const [users, setUsers] = useState();
     const {identity} = useGetIdentity();
+    const headers = new Headers({Accept: 'application/json'});
+    const token = localStorage.getItem('token');
+    headers.set('x-access-token', `${token}`);
+
+    useEffect(() => {
+        fetch('http://0.0.0.0:3000/api/users/awaiting',
+            {
+                method: 'GET',
+                headers: headers,
+            })
+            .then(({data}) => {
+                console.log(data)
+                setUsers(data);
+                setLoading(false);
+            })
+            .catch(error => {
+                setError(error);
+                setLoading(false);
+            })
+    }, []);
+
+    if (loading) return <Loading/>;
+    if (error) return <Error error={error}/>;
+
     return (
         <React.Fragment>
             <Title title="Amazon.fr"/>

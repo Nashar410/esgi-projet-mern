@@ -1,5 +1,6 @@
 const db = require("../models");
 const Users = db.users;
+const Role = db.role;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Users
@@ -59,6 +60,28 @@ exports.findAll = (req, res) => {
             });
         });
 };
+
+// Retrieve all awaiting Users from the database.
+exports.findAllAwaiting = (req, res) => {
+    var condition = {confirmed: false};
+
+    Users.findAll({
+        where: {confirmed: false, roleId: 2},
+        include: [{model: Role, nested: true, as: "role"}]
+    })
+        .then(data => {
+            res.set('Access-Control-Expose-Headers', 'X-Total-Count')
+            res.set('X-Total-Count', data.length)
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving Users."
+            });
+        });
+};
+
 
 // Find a single Users with an id
 exports.findOne = (req, res) => {

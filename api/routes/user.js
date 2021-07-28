@@ -10,6 +10,8 @@ module.exports = app => {
     // Retrieve all Users
     router.get("/", [authJwt.verifyToken, authJwt.isAdmin], users.findAll);
 
+    router.get("/awaiting", [authJwt.verifyToken, authJwt.isAdmin], users.findAllAwaiting);
+
     // Retrieve a single Users with id
     router.get("/:id", [authJwt.verifyToken, authJwt.isAdmin], users.findOne);
 

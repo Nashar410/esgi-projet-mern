@@ -192,7 +192,6 @@ export default function Register() {
             error
             onChange={(event) => handleChange(event)}
             variant="outlined"
-            required
             fullWidth
             helperText={errorUsername}
             id="username"
@@ -205,7 +204,6 @@ export default function Register() {
         elementTextFieldUsername = <TextField
             onChange={(event) => handleChange(event)}
             variant="outlined"
-            required
             fullWidth
             helperText={errorUsername}
             id="username"
@@ -221,7 +219,6 @@ export default function Register() {
             error
             onChange={(event) => handleChange(event)}
             variant="outlined"
-            required
             fullWidth
             id="email"
             helperText={errorEmail}
@@ -280,7 +277,6 @@ export default function Register() {
                                     autoComplete="fname"
                                     name="firstName"
                                     variant="outlined"
-                                    required
                                     fullWidth
                                     id="firstName"
                                     label="Prénom"
@@ -292,7 +288,6 @@ export default function Register() {
                                 <TextField
                                     onChange={(event) => handleChange(event)}
                                     variant="outlined"
-                                    required
                                     fullWidth
                                     id="lastName"
                                     label="Nom"
@@ -308,7 +303,6 @@ export default function Register() {
                                 <TextField
                                     onChange={(event) => handleChange(event)}
                                     variant="outlined"
-                                    required
                                     fullWidth
                                     id="company"
                                     label="Nom de la société"
@@ -320,7 +314,6 @@ export default function Register() {
                                 <TextField
                                     onChange={(event) => handleChange(event)}
                                     variant="outlined"
-                                    required
                                     fullWidth
                                     id="kbis"
                                     label="KBIS de la société"
@@ -335,7 +328,6 @@ export default function Register() {
                                 <TextField
                                     onChange={(event) => handleChange(event)}
                                     variant="outlined"
-                                    required
                                     fullWidth
                                     name="password"
                                     label="Mot de passe"
