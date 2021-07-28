@@ -9,7 +9,7 @@ import {
 
 
 export const TransactionList = props => (
-    <List {...props}>
+    <List {...props} filter={{ role: localStorage.getItem('permissions'), userId: localStorage.getItem('userId') }}>
         <Datagrid rowClick="show">
             <TextField source="id"/>
             <TextField source="userId"/>

@@ -1,5 +1,6 @@
 const db = require("../models");
 const TransactionDB = db.transaction;
+const User = db.users;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Transactions
@@ -46,16 +47,48 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
 
-    TransactionDB.findAll()
-        .then(data => {
-            res.set('Access-Control-Expose-Headers', 'X-Total-Count')
-            res.set('X-Total-Count', Array.isArray(data) ? data.length : 1)
-            res.send(Array.isArray(data) ? data : [data]);
+    let reqFilter = JSON.stringify(req.query.filter);
+    let objectUser = JSON.parse(reqFilter);
+    let userRole = JSON.parse(objectUser);
+
+    User.findByPk(userRole.userId)
+        .then(() => {
+            if(userRole.role === 'ROLE_ADMIN'){
+                TransactionDB.findAll()
+                .then(data => {
+                    res.set('Access-Control-Expose-Headers', 'X-Total-Count')
+                    res.set('X-Total-Count', Array.isArray(data) ? data.length : 1)
+                    res.send(Array.isArray(data) ? data : [data]);
+                })
+                .catch(err => {
+                    res.status(500).send({
+                        message:
+                            err.message || "Some error occurred while retrieving Users."
+                    });
+                });
+            }
+            else{
+                TransactionDB.findAll({
+                    where: {
+                        userId: userRole.userId
+                    }
+                })
+                .then(data => {
+                    res.set('Access-Control-Expose-Headers', 'X-Total-Count')
+                    res.set('X-Total-Count', Array.isArray(data) ? data.length : 1)
+                    res.send(Array.isArray(data) ? data : [data]);
+                })
+                .catch(err => {
+                    res.status(500).send({
+                        message:
+                            err.message || "Some error occurred while retrieving Users."
+                    });
+                });
+            }
         })
         .catch(err => {
             res.status(500).send({
-                message:
-                    err.message || "Some error occurred while retrieving Users."
+                message: "Error retrieving Users with id=" + id
             });
         });
 }

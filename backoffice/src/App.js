@@ -21,10 +21,12 @@ const App = () => (
 
 <Admin dashboard={Dashboard} customRoutes={customRoutes} authProvider={authProvider} dataProvider={dataProvider}>
     {permissions => [
-        <Resource name="transactions" list={permissions === 'ROLE_ADMIN' ? TransactionList : null} show={permissions === 'ROLE_ADMIN' ? TransactionShow : null}/>,
-        permissions === 'ROLE_ADMIN' 
-            ? <Resource name="users" list={UserList} edit={UserEdit}/>
-            : <p></p>
+        permissions === 'ROLE_ADMIN' &&
+                <Resource name="users" list={UserList} edit={UserEdit}/>,
+                <Resource name="transactions" list={TransactionList} show={TransactionShow}/>,
+
+        permissions === 'ROLE_MERCHANT' &&
+               <Resource name="transactions" list={TransactionList} show={TransactionShow}/>
     ]}
         </Admin>
 );
