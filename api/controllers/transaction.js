@@ -63,6 +63,12 @@ exports.create = (req, res) => {
         });
 };
 
+exports.totalCurrencyEUR = (req, res) => {
+    const id = parseInt(req.params.id);
+    console.log(id);
+    TransactionMongo.count({ "merchant.id": id, "currency": "EUR"}).then((data) => res.json(data));
+}
+
 exports.findAll = (req, res) => {
 
     TransactionDB.findAll()

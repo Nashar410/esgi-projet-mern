@@ -13,6 +13,9 @@ module.exports = app => {
         next();
     });
 
+
+    router.get('/kpis/total_currency_eur/:id', controller.totalCurrencyEUR);
+
     router.put('/:id', controller.actionPayment);
 
     router.post('/', controller.create);
