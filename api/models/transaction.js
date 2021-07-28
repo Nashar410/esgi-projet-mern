@@ -15,6 +15,13 @@ module.exports = (sequelize, DataTypes) => {
     };
     Transaction.init({
         type: DataTypes.STRING,
+        datePending: DataTypes.DATE,
+        datePaymentCanceledUser: DataTypes.DATE,
+        datePaymentOkUser: DataTypes.DATE,
+        datePaymentOkPsp: DataTypes.DATE,
+        datePendingRefund: DataTypes.DATE,
+        dateRefundOkUser: DataTypes.DATE,
+        dateRefundOkPsp: DataTypes.DATE,
         total: DataTypes.DOUBLE,
         cart: DataTypes.JSON,
         currency: {

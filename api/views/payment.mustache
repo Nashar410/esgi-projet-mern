@@ -188,7 +188,10 @@
                                    aria-describedby="basic-addon1">
                         </div>
                         <div class="form-group col-sm-12">
-                            <button type="button" class="btn btn-primary btn-block">Payer</button>
+                            <button id="btnAnnuler" type="button" class="btn btn-primary btn-block">Annuler</button>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <button id="btnPayer" type="button" class="btn btn-primary btn-block">Payer</button>
                         </div>
                     </div>
                 </div>
@@ -199,5 +202,35 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script type="application/javascript">
+    document.querySelector('#btnAnnuler').addEventListener('click', async (evt) => {
+        // Appelle de la route d'annulation
+            await fetch('http://0.0.0.0:3000/api/transactions/'+ window.location.href.split('/').pop(), {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({type: 'PAYMENT_CANCELED_USER'})
+            } )
+        // Retour au site marchand
+        window.location = 'http://0.0.0.0:3002?transaction=payment-canceled';
+
+    });
+
+    document.querySelector('#btnPayer').addEventListener('click', async (evt) => {
+        // // Appelle de la route OK
+        await fetch('http://0.0.0.0:3000/api/transactions/'+ window.location.href.split('/').pop(), {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({type: 'PAYMENT_OK_USER'})
+        } );
+        // // Retour au site marchand
+        // window.location = 'http://0.0.0.0:3002?transaction=payment-in-progress';
+
+    });
+
+</script>
 </body>
 </html>

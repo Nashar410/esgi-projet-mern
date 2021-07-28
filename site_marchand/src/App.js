@@ -6,12 +6,17 @@ import Credentials from "./components/Admin/Credentials";
 import CredentialProvider from "./contexts/CredentialContext";
 import ListProvider from "./contexts/ListContext";
 import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
-import GuardedRoute from './components/GuardedRoute.js';
 import 'w3-css/w3.css';
 import ListTransaction from './components/Admin/ListTransaction';
 import ListTransactionProvider from './contexts/ListTransactionContext';
 
 function App() {
+
+    const url = new URL(window.location);
+    const paramTransaction = url.searchParams.get("transaction");
+    if(paramTransaction) {
+        console.log("✅ PSP Payment OK");
+    }
 
     return (
         <div className="App">

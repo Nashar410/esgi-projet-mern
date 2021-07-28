@@ -9,7 +9,7 @@ export default function CreateTransactionButton() {
     const history = useHistory();
 
 
-    const createTransaction = (modality, currency) => {
+    const createTransaction = () => {
 
         const {clientId, clientSecret} = {...JSON.parse(localStorage.getItem('credential'))};
         console.log(clientId);
@@ -25,6 +25,7 @@ export default function CreateTransactionButton() {
 
         const data = {
             userId: clientId,
+            type: 'PENDING',
             consumer: {
                 lastname: "Foo",
                 firstname: "Bart",
@@ -36,15 +37,14 @@ export default function CreateTransactionButton() {
                 country: "France",
             },
             cart: list,
-            totalPrice,
-            currency: currency || "EUR",
+            total: totalPrice,
+            currency: "EUR",
             shippingAddress: {
                 address: "1 rue Bouvier",
                 zipCode: "75011",
                 city: "Paris",
                 country: "France",
-            },
-            type: "buy"
+            }
         };
 
 
@@ -58,18 +58,18 @@ export default function CreateTransactionButton() {
             body: JSON.stringify(data),
         })
             .then((res) => res.json())
-            .then((data) => console.log(data));
+            .then((data) => {
+                // Redirection vers l'url de payment
+                if(data.urlPayment){
+                    window.location = data.urlPayment;
+                }
+            });
     };
 
-    let modalityChoice = "achat";
-
-    const _handleChange = function (event) {
-        modalityChoice = event.target.value;
-    };
     return (
         <div className={'w3-row-padding w3-center'}>
             <Button className={'w3-button w3-green'} title="Créer une transaction"
-                    onClick={() => createTransaction(modalityChoice)}/>
+                    onClick={() => createTransaction()}/>
         </div>
     );
 }
