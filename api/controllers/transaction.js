@@ -14,7 +14,7 @@ exports.create = (req, res) => {
 
     // Create a Transaction
     const transaction = {
-        userId: req.userId,
+        userId: req.body.userId,
         type: req.body.type,
         total: req.body.totalPrice,
         cart: req.body.cart,
