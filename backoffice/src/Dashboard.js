@@ -10,90 +10,117 @@ import TotalCustomers from "./dashboard/TotalCustomers";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Button from "@material-ui/core/Button";
 
-export const Dashboard = () => {
+export const Dashboard = ({permissions, ...props}) => {
     const {identity} = useGetIdentity();
     return (
         <React.Fragment>
             <Title title="Amazon.fr"/>
-            {identity === 'true' ?
-                <Container>
-                    <Button variant="contained" color="primary" href="#credentials">Access to your credentials</Button>
-                    <Grid
-                        container
-                        spacing={3}
-                    >
-                        <Grid
-                            item
-                            lg={3}
-                            sm={6}
-                            xl={3}
-                            xs={12}
-                        >
-                            <Box pt={3}>
-                                <Budget/>
-                            </Box>
-                        </Grid>
-                        <Grid
-                            item
-                            lg={3}
-                            sm={6}
-                            xl={3}
-                            xs={12}
-                        >
-                            <Box pt={3}>
-                                <TotalProfit/>
-                            </Box>
-                        </Grid>
-                        <Grid
-                            item
-                            lg={3}
-                            sm={6}
-                            xl={3}
-                            xs={12}
-                        >
-                            <Box pt={3}>
-                                <TasksProgress/>
-                            </Box>
-                        </Grid>
-                        <Grid
-                            item
-                            lg={3}
-                            sm={6}
-                            xl={3}
-                            xs={12}
-                        >
-                            <Box pt={3}>
-                                <TotalCustomers/>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                </Container>
-                :
-                <Box
-                    sx={{
-                        backgroundColor: 'background.default',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: '100%',
-                        justifyContent: 'center'
-                    }}
+            {(identity === 'true' && permissions === 'ROLE_MERCHANT') &&
+            <Container>
+                <Button variant="contained" color="primary" href="#credentials">Access to your credentials</Button>
+                <Grid
+                    container
+                    spacing={3}
                 >
-                    <Container maxWidth="md">
-                        <Box sx={{textAlign: 'center'}}>
-                            <AccessAlarmIcon style={{ fontSize: 50 }}/>
+                    <Grid
+                        item
+                        lg={3}
+                        sm={6}
+                        xl={3}
+                        xs={12}
+                    >
+                        <Box pt={3}>
+                            <Budget/>
                         </Box>
+                    </Grid>
+                    <Grid
+                        item
+                        lg={3}
+                        sm={6}
+                        xl={3}
+                        xs={12}
+                    >
+                        <Box pt={3}>
+                            <TotalProfit/>
+                        </Box>
+                    </Grid>
+                    <Grid
+                        item
+                        lg={3}
+                        sm={6}
+                        xl={3}
+                        xs={12}
+                    >
+                        <Box pt={3}>
+                            <TasksProgress/>
+                        </Box>
+                    </Grid>
+                    <Grid
+                        item
+                        lg={3}
+                        sm={6}
+                        xl={3}
+                        xs={12}
+                    >
+                        <Box pt={3}>
+                            <TotalCustomers/>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Container>
+            }
+            {(identity === 'false' && permissions === 'ROLE_MERCHANT') &&
+            <Box
+                sx={{
+                    backgroundColor: 'background.default',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                    justifyContent: 'center'
+                }}
+            >
+                <Container maxWidth="md">
+                    <Box sx={{textAlign: 'center'}}>
+                        <AccessAlarmIcon style={{fontSize: 50}}/>
+                    </Box>
 
-                        <Typography
-                            align="center"
-                            color="textPrimary"
-                            variant="h4"
-                        >
-                            Vous êtes en attente de confirmation
-                        </Typography>
-                    </Container>
-                </Box>
+                    <Typography
+                        align="center"
+                        color="textPrimary"
+                        variant="h4"
+                    >
+                        Vous êtes en attente de confirmation
+                    </Typography>
+                </Container>
+            </Box>
+            }
+            {permissions === 'ROLE_ADMIN' &&
+            <Box
+                sx={{
+                    backgroundColor: 'background.default',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                    justifyContent: 'center'
+                }}
+            >
+                <Container maxWidth="md">
+                    <Box sx={{textAlign: 'center'}}>
+                        <LockOpenIcon style={{fontSize: 50}}/>
+                    </Box>
+
+                    <Typography
+                        align="center"
+                        color="textPrimary"
+                        variant="h4"
+                    >
+                        Bienvenue dans l'administration
+                    </Typography>
+                </Container>
+            </Box>
             }
         </React.Fragment>
     )
