@@ -43,7 +43,7 @@ db.transaction.belongsTo(db.users, {
     foreignKey: "userId"
 });
 
-db.users.hasOne(db.credential,{
+db.users.hasOne(db.credential, {
     foreignKey: "userId"
 });
 
@@ -52,18 +52,17 @@ db.credential.belongsTo(db.users, {
     foreignKey: 'userId'
 });
 
-db.ROLES = ["user", "admin", "merchant"];
-
+db.ROLES = ["admin", "merchant"];
 
 
 const denormalizeTransaction = (transaction) => {
     db.transaction.findByPk(transaction.id, {
-        include: [{ model: db.users, as: "merchant" }],
+        include: [{model: db.users, as: "merchant"}],
         //include: [{ model: Client, as: "client" }],
-    }).then(data =>{
+    }).then(data => {
         let id = mongoose.Types.ObjectId(data.id);
         console.log(data);
-        new Transaction({ _id: id, ...data.toJSON() }).save();
+        new Transaction({_id: id, ...data.toJSON()}).save();
     });
 };
 
