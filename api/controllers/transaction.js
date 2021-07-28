@@ -1,8 +1,13 @@
 const db = require("../models");
+const TransactionMongo = require("../models/mongo/transaction");
 const TransactionDB = db.transaction;
 const Op = db.Sequelize.Op;
+
 const PAYMENT_STATUS = require("../utils/paymentStatus.json")
 const fetch = require('node-fetch');
+
+
+const mongoose = require('mongoose');
 
 // Create and Save a new Transactions
 exports.create = (req, res) => {
@@ -111,6 +116,14 @@ exports.actionPayment = async (req, res) => {
     }
 
 };
+
+exports.totalCharts = (req, res) => {
+    const id = parseInt(req.params.id);
+    console.log(id);
+    TransactionMongo.count({ "merchant.id": id}).then((data) => res.json(data));
+}
+
+
 
 exports.refund = (req, res) => {
     const id = req.params.id;
