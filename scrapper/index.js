@@ -2,7 +2,7 @@
  * Required External Modules
  */
 const express = require("express");
-const path = require("path");
+const Currency = require('./db/currency.js');
 const {Scrapper} = require('./scrapper.js');
 
 /**
@@ -10,7 +10,6 @@ const {Scrapper} = require('./scrapper.js');
  */
 const app = express();
 const port = process.env.PORT || "3000";
-const timeout = 1000;
 
 /**
  *  App Configuration
@@ -33,6 +32,7 @@ app.put("*", (req, res) => {
         };
 
         // Sauvegarde dans la BDD
+        new Currency({ ...toSave.toJSON() }).save();
 
 
     }).scrap();
