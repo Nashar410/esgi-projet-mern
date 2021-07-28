@@ -3,9 +3,7 @@ import {useState, useEffect} from 'react';
 import {useDataProvider, Loading, Error, fetchUtils} from 'react-admin';
 import {useGetIdentity} from 'react-admin';
 import {Title} from 'react-admin';
-import Budget from "./dashboard/Budget";
 import {Box, Grid} from "@material-ui/core";
-import TotalProfit from "./dashboard/TotalProfit";
 import TasksProgress from "./dashboard/TasksProgress";
 import TotalCustomers from "./dashboard/TotalCustomers";
 import Container from "@material-ui/core/Container";
@@ -15,6 +13,8 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Paper from '@material-ui/core/Paper';
 import Button from "@material-ui/core/Button";
 import Profile from "./Profile";
+import {TotalTransactions} from "./dashboard/TotalTransactions";
+import {TotalPendingTransactions} from "./dashboard/TotalPendingTransactions";
 
 export const Dashboard = () => {
     const dataProvider = useDataProvider();
@@ -27,20 +27,6 @@ export const Dashboard = () => {
     const permissions = localStorage.getItem('permissions');
 
     useEffect(() => {
-        // fetch('http://0.0.0.0:3000/api/users/awaiting',
-        //     {
-        //         method: 'GET',
-        //         headers: headers,
-        //     })
-        //     .then(({data}) => {
-        //         setUsers(data);
-        //         setLoading(false);
-        //     })
-        //     .catch(error => {
-        //         setError(error);
-        //         setLoading(false);
-        //     })
-
         if (userConfirmed === 'true' && permissions === 'ROLE_MERCHANT') {
             setLoading(true);
             dataProvider.getOne('users', {id: userId})
@@ -64,7 +50,6 @@ export const Dashboard = () => {
             <Title title="Amazon.fr"/>
             {(userConfirmed === 'true' && permissions === 'ROLE_MERCHANT') &&
             <Container>
-                <Button variant="contained" color="primary" href="#credentials">Access to your credentials</Button>
                 <Typography
                     align="center"
                     color="textPrimary"
@@ -84,7 +69,7 @@ export const Dashboard = () => {
                         xs={12}
                     >
                         <Box pt={3}>
-                            <Budget/>
+                            <TotalTransactions/>
                         </Box>
                     </Grid>
                     <Grid
@@ -95,7 +80,7 @@ export const Dashboard = () => {
                         xs={12}
                     >
                         <Box pt={3}>
-                            <TotalProfit/>
+                            <TotalPendingTransactions/>
                         </Box>
                     </Grid>
                     <Grid
@@ -128,6 +113,16 @@ export const Dashboard = () => {
                             </Paper>
                         </Grid>
                     }
+                    <Grid
+                        item
+                        lg={3}
+                        sm={6}
+                        xl={3}
+                        xs={12}
+                    >
+                        <Button variant="contained" color="primary" href="#credentials">Access to your
+                            credentials</Button>
+                    </Grid>
                 </Grid>
             </Container>
             }
