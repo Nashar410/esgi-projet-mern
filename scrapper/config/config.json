@@ -1,0 +1,28 @@
+{
+  "development": {
+    "username": "root",
+    "password": "password",
+    "database": "app",
+    "host": "postgres",
+    "port": "5432",
+    "mongoURL": "mongodb://root:password@mongo:27017/app",
+    "dialect": "postgres",
+    "secret": "esgi-mern-secret-key"
+  },
+  "test": {
+    "username": "root",
+    "password": "password",
+    "database": "app",
+    "host": "0.0.0.0",
+    "dialect": "postgres",
+    "secret": "esgi-mern-secret-key"
+  },
+  "production": {
+    "username": "root",
+    "password": "password",
+    "database": "app",
+    "host": "0.0.0.0",
+    "dialect": "postgres",
+    "secret": "esgi-mern-secret-key"
+  }
+}
