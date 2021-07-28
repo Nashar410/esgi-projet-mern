@@ -21,6 +21,7 @@ const listFilters = [
 ];
 
 export const UserList = props => (
+    console.log(props),
     <List filters={listFilters} {...props}>
         <Datagrid rowClick="edit">
             <TextField source="id"/>
