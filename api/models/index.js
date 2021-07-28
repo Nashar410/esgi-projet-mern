@@ -1,6 +1,7 @@
 const dbConfig = require("../config/config.json");
 
 const Sequelize = require("sequelize");
+const mongoose = require("mongoose");
 const Transaction = require("./mongo/transaction");
 const sequelize = new Sequelize(
     dbConfig.development.database,
@@ -33,11 +34,12 @@ db.users.belongsToMany(db.role, {
 });
 
 db.users.hasMany(db.transaction, {
-    foreignKey: "userId"
+    foreignKey: "userId",
+    as: "transactions"
 });
 
 db.transaction.belongsTo(db.users, {
-    as: "user",
+    as: "merchant",
     foreignKey: "userId"
 });
 
@@ -58,7 +60,14 @@ const denormalizeTransaction = (transaction) => {
     db.transaction.findByPk(transaction.id, {
         include: [{ model: db.users, as: "merchant" }],
         //include: [{ model: Client, as: "client" }],
-    }).then((data) => new Transaction({ _id: data.id, ...data.toJSON() }).save());
+    }).then(data =>{
+        let id = mongoose.Types.ObjectId(data.id);
+        console.log(data);
+        new Transaction({ _id: id, ...data.toJSON() }).save();
+    });
 };
+
+db.transaction.addHook("afterUpdate", denormalizeTransaction);
+db.transaction.addHook("afterCreate", denormalizeTransaction);
 
 module.exports = db;
