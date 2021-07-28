@@ -7,9 +7,27 @@
 	"item": [
 		{
 			"name": "all Users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "{{API_URL}}/users",
 					"host": [
@@ -26,7 +44,13 @@
 			"name": "Delete Users",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "{{API_URL}}/users/1",
 					"host": [
@@ -47,7 +71,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"firstName\": \"Thomas\",\n    \"lastName\": \"Lemoine\",\n    \"email\": \"contact@thomaslemoine.net\",\n    \"username\": \"tlemoine\",\n    \"kbis\": \"32672677\",\n    \"devise\": null,\n    \"contact\": null,\n    \"company\": null,\n    \"confirmed\": false,\n    \"password\": \"12345678\",\n    \"roles\": [\"merchant\", \"user\"]\n}",
+					"raw": "{\n    \"firstName\": \"Thomas\",\n    \"lastName\": \"Lemoine\",\n    \"email\": \"contact@thomaslemoine.net\",\n    \"username\": \"tlemoine\",\n    \"kbis\": \"32672677\",\n    \"devise\": null,\n    \"contact\": null,\n    \"company\": null,\n    \"confirmed\": false,\n    \"password\": \"12345678\",\n    \"roles\": [\"admin\"]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -74,7 +98,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"tlemoine\",\n    \"password\": \"1234\"\n}",
+					"raw": "{\n    \"username\": \"tlemoine\",\n    \"password\": \"12345678\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -89,6 +113,54 @@
 					"path": [
 						"auth",
 						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all awaiting Users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{API_URL}}/users/awaiting",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"users",
+						"awaiting"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create credentials by Users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{API_URL}}/credentials/1",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"credentials",
+						"1"
 					]
 				}
 			},

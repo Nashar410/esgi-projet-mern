@@ -12,6 +12,7 @@ export default function CreateTransactionButton() {
     const createTransaction = (modality, currency) => {
 
         const {clientId, clientSecret} = {...JSON.parse(localStorage.getItem('credential'))};
+        console.log(clientId);
         let auth = "";
 
         if(!clientId || !clientSecret) {
@@ -23,6 +24,7 @@ export default function CreateTransactionButton() {
         }
 
         const data = {
+            userId: clientId,
             consumer: {
                 lastname: "Foo",
                 firstname: "Bart",

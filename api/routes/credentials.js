@@ -5,7 +5,7 @@ module.exports = app => {
     var router = require("express").Router();
 
     // Create a new Credentials
-    router.post("/:id", [authJwt.verifyToken, authJwt.isMerchantOrAdmin], credentials.createByUser);
+    //router.post("/:id", [authJwt.verifyToken, authJwt.isMerchantOrAdmin], credentials.createByUser);
 
     // Retrieve all Credentials
     router.get("/", [authJwt.verifyToken, authJwt.isMerchantOrAdmin], credentials.findAll);

@@ -21,16 +21,11 @@ db.sequelize.sync({force: true}).then(() => {
 function initial() {
     Role.create({
         id: 1,
-        name: "user"
-    });
-
-    Role.create({
-        id: 2,
         name: "merchant"
     });
 
     Role.create({
-        id: 3,
+        id: 2,
         name: "admin"
     });
 }

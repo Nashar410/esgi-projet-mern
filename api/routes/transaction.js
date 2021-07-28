@@ -14,9 +14,9 @@ module.exports = app => {
     });
 
 
-    router.post('/', [authJWT.verifyBasicToken], controller.create);
+    router.post('/', controller.create);
 
-    router.get('/', [authJWT.verifyBasicToken], controller.findAll);
+    router.get('/', controller.findAll)
 
     router.get('/kpis/total/:id', controller.totalCharts);
 

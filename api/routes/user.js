@@ -13,7 +13,7 @@ module.exports = app => {
     router.get("/awaiting", [authJwt.verifyToken, authJwt.isAdmin], users.findAllAwaiting);
 
     // Retrieve a single Users with id
-    router.get("/:id", [authJwt.verifyToken, authJwt.isAdmin], users.findOne);
+    router.get("/:id", [authJwt.verifyToken, authJwt.isMerchantOrAdmin], users.findOne);
 
     // Update a Users with id
     router.put("/:id", [authJwt.verifyToken, authJwt.isAdmin], users.update);

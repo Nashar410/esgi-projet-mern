@@ -43,7 +43,7 @@ db.transaction.belongsTo(db.users, {
     foreignKey: "userId"
 });
 
-db.users.hasOne(db.credential,{
+db.users.hasOne(db.credential, {
     foreignKey: "userId"
 });
 
@@ -52,8 +52,7 @@ db.credential.belongsTo(db.users, {
     foreignKey: 'userId'
 });
 
-db.ROLES = ["user", "admin", "merchant"];
-
+db.ROLES = ["admin", "merchant"];
 
 
 const denormalizeTransaction = (transaction) => {
