@@ -19,7 +19,7 @@ module.exports = app => {
 
     router.get('/', controller.findAll)
 
-    router.get('/psp/:id', controller.retourPayment);
+    router.post('/psp/:id', controller.retourPayment);
 
     app.use('/api/transactions', router);
 };

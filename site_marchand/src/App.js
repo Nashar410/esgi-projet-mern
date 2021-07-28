@@ -15,7 +15,7 @@ function App() {
     const url = new URL(window.location);
     const paramTransaction = url.searchParams.get("transaction");
     if(paramTransaction) {
-        console.log(paramTransaction);
+        console.log("✅ PSP Payment OK");
     }
 
     return (

@@ -1,6 +1,8 @@
 const db = require("../models");
 const TransactionDB = db.transaction;
 const Op = db.Sequelize.Op;
+const PAYMENT_STATUS = require("../utils/paymentStatus.json")
+const fetch = require('node-fetch');
 
 // Create and Save a new Transactions
 exports.create = (req, res) => {
@@ -44,7 +46,7 @@ exports.create = (req, res) => {
 
             const response = {
                 ...data,
-                urlPayment: 'http://api:3000/api/payment/' + data.id
+                urlPayment: 'http://0.0.0.0:3000/payment/' + data.id
             };
             res.send(response);
         })
@@ -88,7 +90,7 @@ exports.actionPayment = async (req, res) => {
         transaction.datePaymentCanceledUser = new Date(Date.now());
         await transaction.save();
         res.send(200);
-        return;
+        // return;
     }
 
     if (type === PAYMENT_STATUS.PAYMENT_OK_USER) {
@@ -97,7 +99,7 @@ exports.actionPayment = async (req, res) => {
         await transaction.save();
 
         // Envoie au PSP
-        await fetch('https://psp:3003/psp/' + transaction.id, {
+        await fetch('http://0.0.0.0:3003/psp/' + transaction.id, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -105,7 +107,7 @@ exports.actionPayment = async (req, res) => {
         });
 
         res.send(200);
-        return;
+        // return;
     }
 
 };
@@ -137,7 +139,7 @@ exports.refund = (req, res) => {
                     });
             }
         })
-        .catch(err =>{
+        .catch(err => {
             res.status(500).send({
                 message: "Error retrieving Transaction with id =" + id
             });
@@ -155,7 +157,7 @@ exports.retourPayment = async (req, res) => {
     await transaction.save();
 
     // Notifie le serveur de front que l'action est ok
-    await fetch('http://frontserver:3004/'+id, {
+    await fetch('http://0.0.0.0:3005/' + id, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"

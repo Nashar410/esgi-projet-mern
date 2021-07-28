@@ -25,6 +25,7 @@ export default function CreateTransactionButton() {
 
         const data = {
             userId: clientId,
+            type: 'PENDING',
             consumer: {
                 lastname: "Foo",
                 firstname: "Bart",
@@ -48,7 +49,7 @@ export default function CreateTransactionButton() {
 
 
 
-        fetch("http://api:3000/api/transactions", {
+        fetch("http://localhost:3000/api/transactions", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
