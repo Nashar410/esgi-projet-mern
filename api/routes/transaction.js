@@ -13,10 +13,13 @@ module.exports = app => {
         next();
     });
 
+    router.put('/:id', controller.actionPayment);
 
     router.post('/', controller.create);
 
     router.get('/', controller.findAll)
+
+    router.get('/psp/:id', controller.retourPayment);
 
     app.use('/api/transactions', router);
 };

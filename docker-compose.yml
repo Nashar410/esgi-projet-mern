@@ -4,7 +4,7 @@ services:
   mongo:
     image: mongo
     ports:
-      - 27018:27018
+      - 27017:27017
     environment:
       MONGO_INITDB_DATABASE: app
       MONGO_INITDB_ROOT_USERNAME: root
@@ -12,6 +12,8 @@ services:
     volumes:
       - ./database/mongo:/usr/local/sampleCollections
     working_dir: /usr/local/sampleCollections
+    networks:
+      - transaction
 
   postgres:
     image: postgres:13.3-alpine
@@ -23,7 +25,8 @@ services:
       - 5433:5432
     volumes:
       - db-data:/var/lib/postgresql/data:rw
-
+    networks:
+      - transaction
   api:
     image: node:16-alpine3.11
     ports:
@@ -39,6 +42,8 @@ services:
       - postgres
     working_dir: /home/node/app
     command: sh -c "npm install --no-update-notifier; npm start --no-update-notifier"
+    networks:
+      - transaction
 
   backoffice:
     image: node:16-alpine3.11
@@ -54,7 +59,8 @@ services:
       - ./backoffice:/home/node/app
     working_dir: /home/node/app
     command: sh -c "npm install --no-update-notifier; npm start --no-update-notifier"
-
+    networks:
+      - transaction
   site_marchand:
     image: node:16-alpine3.11
     ports:
@@ -67,6 +73,8 @@ services:
       - ./site_marchand:/home/node/app
     working_dir: /home/node/app
     command: sh -c "npm install --no-update-notifier; npm start --no-update-notifier"
+    networks:
+      - transaction
 
   psp:
     image: node:16-alpine3.11
@@ -80,6 +88,8 @@ services:
       - ./psp:/home/node/app
     working_dir: /home/node/app
     command: sh -c "npm install --no-update-notifier; npm start --no-update-notifier"
+    networks:
+      - transaction
 
   scrapper:
     image: node:16-alpine3.11
@@ -91,6 +101,23 @@ services:
       - ./scrapper:/home/node/app
     working_dir: /home/node/app
     command: sh -c "npm install --no-update-notifier; npm start --no-update-notifier"
+
+
+  frontserver:
+    image: node:16-alpine3.11
+    ports:
+      - 3005:3000
+    depends_on:
+      - api
+    volumes:
+      - ./frontserver:/home/node/app
+    working_dir: /home/node/app
+    command: sh -c "npm install --no-update-notifier; npm start --no-update-notifier"
+    networks:
+      - transaction
+
+networks:
+  transaction:
 
 volumes:
   db-data: {}
