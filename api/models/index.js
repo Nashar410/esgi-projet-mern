@@ -61,4 +61,7 @@ const denormalizeTransaction = (transaction) => {
     }).then((data) => new Transaction({ _id: data.id, ...data.toJSON() }).save());
 };
 
+db.transaction.addHook("afterUpdate", denormalizeTransaction);
+db.transaction.addHook("afterCreate", denormalizeTransaction);
+
 module.exports = db;

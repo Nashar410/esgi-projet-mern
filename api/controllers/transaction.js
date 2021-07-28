@@ -66,6 +66,7 @@ exports.refund = (req, res) => {
         .then(data =>{
             console.log(data);
             if (data.type === 'validated'){
+
                 data.type = 'refund';
                 TransactionDB.update(data, {
                     where: {id: id}
@@ -74,6 +75,7 @@ exports.refund = (req, res) => {
                         res.send({
                             message: "transaction was updated successfully."
                         });
+
                     } else {
                         res.send({
                             message: `Cannot update transaction with id=${id}. Maybe transaction was not found or req.body is empty!`

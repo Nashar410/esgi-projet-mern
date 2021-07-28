@@ -11,7 +11,6 @@ export const CredentialsShow = () => {
             <Card>
                 <Title title="Mes credentials" />
                 <CardContent>
-                    
                 </CardContent>
             </Card>
         )
