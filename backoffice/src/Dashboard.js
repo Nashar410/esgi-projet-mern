@@ -16,13 +16,15 @@ import Paper from '@material-ui/core/Paper';
 import Button from "@material-ui/core/Button";
 import Profile from "./Profile";
 
-export const Dashboard = ({permissions, ...props}) => {
+export const Dashboard = () => {
     const dataProvider = useDataProvider();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
     const [user, setUser] = useState();
     const {identity} = useGetIdentity();
     const userId = localStorage.getItem('userId');
+    const userConfirmed = localStorage.getItem('confirmed');
+    const permissions = localStorage.getItem('permissions');
 
     useEffect(() => {
         // fetch('http://0.0.0.0:3000/api/users/awaiting',
@@ -31,7 +33,6 @@ export const Dashboard = ({permissions, ...props}) => {
         //         headers: headers,
         //     })
         //     .then(({data}) => {
-        //         console.log(data)
         //         setUsers(data);
         //         setLoading(false);
         //     })
@@ -40,15 +41,18 @@ export const Dashboard = ({permissions, ...props}) => {
         //         setLoading(false);
         //     })
 
-        dataProvider.getOne('users', {id: userId})
-            .then(({data}) => {
-                setUser(data);
-                setLoading(false);
-            })
-            .catch(error => {
-                setError(error);
-                setLoading(false);
-            })
+        if (userConfirmed === 'true' && permissions === 'ROLE_MERCHANT') {
+            setLoading(true);
+            dataProvider.getOne('users', {id: userId})
+                .then(({data}) => {
+                    setUser(data);
+                    setLoading(false);
+                })
+                .catch(error => {
+                    setError(error);
+                    setLoading(false);
+                })
+        }
 
     }, []);
 
@@ -58,7 +62,7 @@ export const Dashboard = ({permissions, ...props}) => {
     return (
         <React.Fragment>
             <Title title="Amazon.fr"/>
-            {(identity === 'true' && permissions === 'ROLE_MERCHANT') &&
+            {(userConfirmed === 'true' && permissions === 'ROLE_MERCHANT') &&
             <Container>
                 <Button variant="contained" color="primary" href="#credentials">Access to your credentials</Button>
                 <Typography
@@ -66,7 +70,7 @@ export const Dashboard = ({permissions, ...props}) => {
                     color="textPrimary"
                     variant="h4"
                 >
-                    Bonjour {user.firstName} {user.lastName},
+                    Bonjour {user && user.firstName} {user && user.lastName},
                 </Typography>
                 <Grid
                     container
@@ -116,15 +120,18 @@ export const Dashboard = ({permissions, ...props}) => {
                             <TotalCustomers/>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={6}>
-                        <Paper>
-                            <Profile user={user}/>
-                        </Paper>
-                    </Grid>
+                    {
+                        user &&
+                        <Grid item xs={12} md={6} lg={6}>
+                            <Paper>
+                                <Profile user={user}/>
+                            </Paper>
+                        </Grid>
+                    }
                 </Grid>
             </Container>
             }
-            {(identity === 'false' && permissions === 'ROLE_MERCHANT') &&
+            {(userConfirmed === 'false' && permissions === 'ROLE_MERCHANT') &&
             <Box
                 sx={{
                     backgroundColor: 'background.default',
