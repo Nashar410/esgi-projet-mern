@@ -59,10 +59,8 @@ db.ROLES = ["user", "admin", "merchant"];
 const denormalizeTransaction = (transaction) => {
     db.transaction.findByPk(transaction.id, {
         include: [{ model: db.users, as: "merchant" }],
-        //include: [{ model: Client, as: "client" }],
     }).then(data =>{
         let id = mongoose.Types.ObjectId(data.id);
-        console.log(data);
         new Transaction({ _id: id, ...data.toJSON() }).save();
     });
 };

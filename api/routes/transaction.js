@@ -16,7 +16,11 @@ module.exports = app => {
 
     router.post('/', [authJWT.verifyBasicToken], controller.create);
 
-    router.get('/', [authJWT.verifyBasicToken], controller.findAll)
+    router.get('/', [authJWT.verifyBasicToken], controller.findAll);
+
+    router.get('/kpis/total/:id', controller.totalCharts);
+
+    router.get('/kpis/total_pending/:id', controller.totalChartsbyStatusPending);
 
     app.use('/api/transactions', router);
 };
