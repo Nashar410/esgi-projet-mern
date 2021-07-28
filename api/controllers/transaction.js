@@ -104,12 +104,16 @@ exports.actionPayment = async (req, res) => {
         await transaction.save();
 
         // Envoie au PSP
-        await fetch('http://0.0.0.0:3003/psp/' + transaction.id, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
+        try {
+            await fetch('http://0.0.0.0:3003/psp/' + transaction.id, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+        } catch (e) {
+            console.log('PSP en maintenance')
+        }
 
         res.send(200);
         // return;
