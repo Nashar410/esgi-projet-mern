@@ -44,6 +44,11 @@ verifyBasicToken = (req, res, next) => {
 
 isAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
+        if (!user) {
+            return res.status(204).send({
+                message: "No user found!"
+            });
+        }
         user.getRoles().then(roles => {
             for (let i = 0; i < roles.length; i++) {
                 if (roles[i].name === "admin") {
