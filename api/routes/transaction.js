@@ -18,5 +18,9 @@ module.exports = app => {
 
     router.get('/', controller.findAll)
 
+    router.get('/kpis/total/:id', controller.totalCharts);
+
+    router.get('/kpis/total_pending/:id', controller.totalChartsbyStatusPending);
+
     app.use('/api/transactions', router);
 };

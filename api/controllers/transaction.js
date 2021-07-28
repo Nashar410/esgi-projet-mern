@@ -1,8 +1,9 @@
 const db = require("../models");
+const TransactionMongo = require("../models/mongo/transaction");
 const TransactionDB = db.transaction;
 const User = db.users;
 const Op = db.Sequelize.Op;
-
+const mongoose = require('mongoose');
 // Create and Save a new Transactions
 exports.create = (req, res) => {
     // Validate request
@@ -92,6 +93,14 @@ exports.findAll = (req, res) => {
             });
         });
 }
+
+exports.totalCharts = (req, res) => {
+    const id = parseInt(req.params.id);
+    console.log(id);
+    TransactionMongo.count({ "merchant.id": id}).then((data) => res.json(data));
+}
+
+
 
 exports.refund = (req, res) => {
     const id = req.params.id;
