@@ -127,7 +127,10 @@ exports.totalCharts = (req, res) => {
     TransactionMongo.count({ "merchant.id": id}).then((data) => res.json(data));
 }
 
-
+exports.totalChartsbyStatusPending = (req, res) => {
+    const id = parseInt(req.params.id);
+    TransactionMongo.count({ "merchant.id": id, "type": "PENDING"}).then((data) => res.json(data));
+}
 
 exports.refund = (req, res) => {
     const id = req.params.id;
