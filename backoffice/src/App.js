@@ -2,6 +2,7 @@ import * as React from "react";
 import {Admin, Resource, fetchUtils, useGetIdentity} from 'react-admin';
 import simpleRestProvider from 'ra-data-simple-rest';
 import {UserList, UserEdit} from './Users';
+import {TransactionList, TransactionShow} from './Transactions';
 import customRoutes from "./customRoutes";
 import authProvider from "./authProvider";
 import {Dashboard} from './Dashboard';
@@ -20,7 +21,8 @@ const App = () => (
 
 <Admin dashboard={Dashboard} customRoutes={customRoutes} authProvider={authProvider} dataProvider={dataProvider}>
     {permissions => [
-        permissions === 'ROLE_ADMIN'
+        <Resource name="transactions" list={permissions === 'ROLE_ADMIN' ? TransactionList : null} show={permissions === 'ROLE_ADMIN' ? TransactionShow : null}/>,
+        permissions === 'ROLE_ADMIN' 
             ? <Resource name="users" list={UserList} edit={UserEdit}/>
             : <p></p>
     ]}

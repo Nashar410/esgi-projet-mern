@@ -14,9 +14,9 @@ module.exports = app => {
     });
 
 
-    router.post('/', [authJWT.verifyBasicToken], controller.create);
+    router.post('/', controller.create);
 
-    router.get('/', [authJWT.verifyBasicToken], controller.findAll)
+    router.get('/', controller.findAll)
 
     app.use('/api/transactions', router);
 };

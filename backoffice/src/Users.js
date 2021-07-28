@@ -10,12 +10,18 @@ import {
     BooleanField,
     Edit,
     SimpleForm,
-    DateInput
+    DateInput,
+    ReferenceInput,
+    SelectInput,
+    SearchInput
 } from 'react-admin';
 
+const listFilters = [
+    <SearchInput source="q" alwaysOn />,
+];
 
 export const UserList = props => (
-    <List {...props}>
+    <List filters={listFilters} {...props}>
         <Datagrid rowClick="edit">
             <TextField source="id"/>
             <TextField source="firstName"/>
