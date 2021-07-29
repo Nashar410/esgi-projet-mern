@@ -25,7 +25,7 @@ const App = () => (
                 <Resource name="users" list={UserList} edit={UserEdit}/>,
                 <Resource name="transactions" list={TransactionList} show={TransactionShow}/>,
 
-        permissions === 'ROLE_MERCHANT' &&
+        (permissions === 'ROLE_MERCHANT') &&
                <Resource name="transactions" list={TransactionList} show={TransactionShow}/>
     ]}
         </Admin>

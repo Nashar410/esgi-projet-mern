@@ -47,14 +47,12 @@ app.listen(port, () => {
 const handlePayment = (idTransaction) => {
     setTimeout(() => {
             // Requêter le backoffice pour lui dire ok
-            fetch('http://0.0.0.0:3000/api/transactions/psp/' + idTransaction, {
+            fetch('http://api:3000/api/transactions/psp/' + idTransaction, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: {
-                    type: "PAYMENT_OK_PSP"
-                }
+                body: JSON.stringify({type: "PAYMENT_OK_PSP"})
             })
         },
         timeout);

@@ -19,9 +19,12 @@ exports.create = (req, res) => {
         return;
     }
 
+    console.log("====> req.userId")
+    console.log(req.userId)
+
     // Create a Transaction
     const transaction = {
-        userId: req.userId,
+        userId: req.body.userId,
         type: PAYMENT_STATUS.PENDING,
         datePending: new Date(Date.now()),
         datePaymentCanceledUser: null,
@@ -111,7 +114,7 @@ exports.actionPayment = async (req, res) => {
 
         // Envoie au PSP
         try {
-            await fetch('http://0.0.0.0:3003/psp/' + transaction.id, {
+            await fetch('http://psp:3000/psp/' + transaction.id, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
