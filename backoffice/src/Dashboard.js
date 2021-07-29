@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useState, useEffect} from 'react';
-import {useDataProvider, Loading, Error, fetchUtils} from 'react-admin';
-import {useGetIdentity} from 'react-admin';
+import {useDataProvider, Loading, Error} from 'react-admin';
 import {Title} from 'react-admin';
 import {Box, Grid} from "@material-ui/core";
 import TasksProgress from "./dashboard/TasksProgress";
@@ -21,7 +20,6 @@ export const Dashboard = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
     const [user, setUser] = useState();
-    const {identity} = useGetIdentity();
     const userId = localStorage.getItem('userId');
     const userConfirmed = localStorage.getItem('confirmed');
     const permissions = localStorage.getItem('permissions');

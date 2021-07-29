@@ -7,15 +7,12 @@ export const TotalPendingTransactions = (props) => {
     const [loading, setLoading] = useState(false);
     const [kpis, setkpis] = useState();
     const userId = localStorage.getItem('userId');
-    // const secret = localStorage.getItem('secret');
-    // const auth = "Basic " + btoa(${userId}:${secret});
     useEffect(() => {
         fetch('http://localhost:3000/api/transactions/kpis/total_pending/' + userId,
             {
                 method: 'GET',
             })
-            .then(({data}) => {
-                console.log(data)
+            .then((data) => {
                 setkpis(data);
                 setLoading(false);
             })
